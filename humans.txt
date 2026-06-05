@@ -1,0 +1,9 @@
+/* TEAM */
+Developer: AntiGravity
+Site: https://clipkingsbarber.shop
+
+/* SITE */
+Last update: 2026-06-04
+Language: English
+Doctype: HTML5
+IDE: Visual Studio Code
