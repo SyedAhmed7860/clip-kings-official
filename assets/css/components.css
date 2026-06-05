@@ -1,0 +1,112 @@
+/* ==========================================
+   COMPONENTS & LAYOUT UTILITIES
+   ========================================== */
+
+/* Layout */
+.bg-darker { background-color: var(--color-bg-darker); }
+.section-padding { padding: var(--section-padding); }
+.container { max-width: 1320px; margin: 0 auto; padding: 0 5vw; width: 100%; }
+.container-fluid { padding: 0 5vw; width: 100%; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.max-w-600 { max-width: 600px; }
+.max-w-700 { max-width: 700px; }
+.max-w-900 { max-width: 900px; }
+.mb-0 { margin-bottom: 0; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 3rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 4rem; }
+.py-3 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-5 { padding-top: 4rem; padding-bottom: 4rem; }
+.w-100 { width: 100%; }
+.d-flex { display: flex; }
+.justify-between { justify-content: space-between; }
+.flex-align { display: flex; align-items: flex-start; gap: 1rem; }
+.relative { position: relative; }
+.z-10 { z-index: 10; }
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem 2.5rem;
+    font-family: var(--font-accent);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: var(--transition-fast);
+    position: relative;
+    will-change: transform;
+    cursor: none; /* For custom cursor */
+}
+
+.btn-large { padding: 1.5rem 3.5rem; font-size: 1.1rem; }
+.btn-sm { padding: 0.8rem 1.5rem; font-size: 0.85rem; }
+
+.btn-primary {
+    background-color: var(--color-gold);
+    color: #000;
+    border: 1px solid var(--color-gold);
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-gold-hover);
+    border-color: var(--color-gold-hover);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-gold);
+    border: 1px solid var(--color-gold);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-gold);
+    color: #000;
+}
+
+.hover-gold { transition: color 0.3s; }
+.hover-gold:hover { color: var(--color-gold); }
+.hover-white { transition: color 0.3s; }
+.hover-white:hover { color: #fff; }
+
+/* Urgency / CRO badges */
+.urgency-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212, 175, 55, 0.08);
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+    animation: pulseDot 2s infinite;
+}
+
+/* Borders and lines */
+.border-top-gold { border-top: 1px solid var(--color-border-gold); }
+.border-top-muted { border-top: 1px solid var(--color-border); }
+
+/* Glassmorphism / Surfaces */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+}
