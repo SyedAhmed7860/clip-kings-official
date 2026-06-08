@@ -95,7 +95,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%; /* CHANGED from 100vw to 100% to prevent horizontal scrollbar overflow */
     height: 100vh;
     z-index: -1;
     pointer-events: none;
@@ -104,7 +104,7 @@
 
 .horizontal-scroll-section {
     position: relative;
-    width: 100vw;
+    width: 100%; /* CHANGED from 100vw to 100% to prevent horizontal scrollbar overflow */
     height: 100vh;
     overflow: hidden;
     background: #050505;
@@ -121,7 +121,7 @@
 }
 
 .horizontal-scroll-item {
-    width: 60vw;
+    width: 60vw; /* This is safe because the parent has explicit overflow: hidden */
     height: 60vh;
     position: relative;
     border-radius: 12px;
