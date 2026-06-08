@@ -33,16 +33,31 @@
 .menu-toggle { display: none; flex-direction: column; gap: 6px; background: none; border: none; z-index: 1001; }
 .menu-toggle .line { width: 30px; height: 1px; background-color: var(--color-gold); transition: var(--transition-fast); }
 
-/* MOBILE MENU OVERLAY */
+/* MOBILE MENU OVERLAY - Bugs fixed here */
 .mobile-menu-overlay { 
-    position: fixed; inset: 0; background: rgba(2,2,2,0.98); 
-    backdrop-filter: blur(15px); z-index: 1002; display: flex; flex-direction: column; 
-    justify-content: center; padding: 5%; opacity: 0; pointer-events: none; 
+    /* HTML inline styles ko override karne ke liye !important lagaya gaya hai */
+    position: fixed !important; inset: 0 !important; background: rgba(2,2,2,0.98) !important; 
+    backdrop-filter: blur(15px) !important; 
+    z-index: 9999 !important; /* Header se upar lane ke liye */
+    display: flex !important; /* Inline display:none ko todne ke liye */
+    flex-direction: column !important; 
+    justify-content: center !important; padding: 5% !important; 
+    opacity: 0; pointer-events: none !important; 
     transition: var(--transition-smooth); 
     transform: translateX(-100%);
+    visibility: hidden; /* Inactive state mein hidden rakhne ke liye */
 }
-.mobile-menu-overlay.active { opacity: 1; pointer-events: all; transform: translateX(0); }
-.close-menu { position: absolute; top: 2rem; right: 5vw; background: none; border: none; color: var(--color-gold); font-size: 3rem; cursor: pointer; }
+.mobile-menu-overlay.active { 
+    opacity: 1 !important; 
+    pointer-events: all !important; 
+    transform: translateX(0) !important; 
+    visibility: visible !important; 
+}
+.close-menu { 
+    position: absolute !important; top: 2rem !important; right: 5vw !important; 
+    background: none; border: none; color: var(--color-gold); 
+    font-size: 3rem; cursor: pointer; z-index: 10000 !important; 
+}
 .mobile-nav { display: flex; flex-direction: column; gap: 2rem; text-align: left; margin-bottom: 4rem; padding-left: 2rem; }
 .mobile-link { font-size: clamp(2rem, 6vw, 3rem); color: #fff; text-transform: uppercase; transition: color 0.3s; }
 .mobile-link:hover { color: var(--color-gold); padding-left: 10px; }
