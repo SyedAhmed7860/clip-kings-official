@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://www.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://booksy.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/@barba/core" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="assets/js/chatbot.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+
+    <style>
+        /* Custom Styles for Next-Level Homepage Upgrades */
+        :root {
+            --color-gold: #D4AF37;
+            --color-gold-dark: #AA8C2C;
+            --color-gold-light: #F3E5AB;
+            --bg-black: #030303;
+            --bg-darker: #080808;
+            --glass-bg: rgba(10, 10, 10, 0.45);
+            --glass-border: rgba(212, 175, 55, 0.15);
+        }
+        
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Cinematic Noise Overlay */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            mix-blend-mode: overlay;
+        }
+
+        /* Ambient Glows */
+        .ambient-glow {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Animated Foil Text */
+        .title-gradient {
+            background: linear-gradient(to right, #AA8C2C 0%, #F3E5AB 20%, #D4AF37 40%, #AA8C2C 60%, #F3E5AB 80%, #D4AF37 100%);
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: foilShine 8s linear infinite;
+            text-shadow: 0px 4px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        @keyframes foilShine {
+            to { background-position: 200% center; }
+        }
+
+        /* Hero Video Section */
+        .cinematic-hero-split {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0.5;
+            transform: scale(1.05);
+            animation: slowPan 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowPan {
+            0% { transform: scale(1.05) translate(0, 0); }
+            100% { transform: scale(1.1) translate(-1%, 1%); }
+        }
+
+        .hero-overlay-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 80%, #030303 100%);
+            z-index: 2;
+        }
+        
+        .hero-content-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            padding: 0 5vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .massive-title {
+            font-size: clamp(3.5rem, 8vw, 8.5rem); 
+            line-height: 1; 
+            margin-bottom: 20px;
+            white-space: nowrap;
+            letter-spacing: -2px;
+        }
+
+        /* Premium Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: 'Oswald', sans-serif;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+            color: #000;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg);
+            transition: all 0.7s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:hover::before {
+            left: 200%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+            color: #000;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-outline::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 0;
+            background: var(--color-gold);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+        }
+
+        .btn-outline:hover::after {
+            height: 100%;
+        }
+
+        .btn-outline:hover {
+            color: #000;
+            border-color: var(--color-gold);
+        }
+
+        /* Audio Toggle Button */
+        .audio-toggle {
+            position: absolute;
+            bottom: 40px;
+            right: 5vw;
+            z-index: 50;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--color-gold);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        
+        .audio-toggle:hover {
+            background: var(--color-gold);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 120px 5vw;
+            position: relative;
+        }
+        
+        /* Advanced Glassmorphism */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Premium Image Hover Utilities */
+        .img-zoom-container {
+            overflow: hidden;
+            position: relative;
+            border-radius: inherit;
+        }
+        
+        .img-zoom-container img {
+            transition: transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            will-change: transform;
+        }
+        
+        .group:hover .img-zoom-container img,
+        .magnetic:hover > img,
+        .magnetic:hover .img-zoom-container img {
+            transform: scale(1.08);
+        }
+
+        /* Interactive Glow Cards */
+        .magnetic-card {
+            position: relative;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        .magnetic-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212,175,55,0.15), transparent 40%);
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .magnetic-card:hover::before {
+            opacity: 1;
+        }
+
+        .magnetic-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+
+        /* Desktop Nav Control */
+        .desktop-nav {
+            display: none;
+        }
+        @media (min-width: 992px) {
+            .desktop-nav {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+            }
+        }
+        
+        /* Preloader Glow */
+        .preloader-line {
+            box-shadow: 0 0 15px var(--color-gold);
+        }
+
+    </style>
+
+    <!-- SEO INJECTION START -->
+    <title>404 - Page Not Found | Clip Kings Barber Shop</title>
+    <meta name="description" content="Thornhill's highest-rated luxury barbershop. We specialize in precision fades, master grooming, and elite beard sculpting. Book your premium experience today.">
+    <link rel="canonical" href="https://clipkingsbarber.shop/">
+    <meta property="og:title" content="Clip Kings Barber Shop | Premium Grooming & Master Fades in Thornhill">
+    <meta property="og:description" content="Thornhill's highest-rated luxury barbershop. We specialize in precision fades, master grooming, and elite beard sculpting. Book your premium experience today.">
+    <meta property="og:url" content="https://clipkingsbarber.shop/">
+    <meta property="og:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Clip Kings Barber Shop | Premium Grooming & Master Fades in Thornhill">
+    <meta name="twitter:description" content="Thornhill's highest-rated luxury barbershop. We specialize in precision fades, master grooming, and elite beard sculpting. Book your premium experience today.">
+    <meta name="twitter:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Clip Kings Barber Shop">
+    <meta name="theme-color" content="#d4af37">
+    <meta name="geo.region" content="CA-ON">
+    <meta name="geo.placename" content="Thornhill">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Barbershop",
+          "@id": "https://clipkingsbarber.shop/#organization",
+          "name": "Clip Kings Barber Shop",
+          "url": "https://clipkingsbarber.shop",
+          "logo": "https://clipkingsbarber.shop/assets/images/icon-512.webp",
+          "image": "https://clipkingsbarber.shop/assets/images/hero-bg.webp",
+          "telephone": "(905) 707-1969",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "370 Steeles Ave W #105",
+            "addressLocality": "Thornhill",
+            "addressRegion": "ON",
+            "postalCode": "L4J 6X1",
+            "addressCountry": "CA"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 43.7958,
+            "longitude": -79.4312
+          },
+          "priceRange": "$",
+          "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "20:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "18:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:00", "closes": "18:00" }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://clipkingsbarber.shop/#website",
+          "url": "https://clipkingsbarber.shop",
+          "name": "Clip Kings Barber Shop",
+          "publisher": {"@id": "https://clipkingsbarber.shop/#organization"}
+        }
+      ]
+    }
+    </script>
+    <!-- SEO INJECTION END -->
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+</head>
+<body class="loading" data-barba="wrapper">
+    <noscript>
+        <style>
+            .gs-reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+            .loading { overflow: visible !important; }
+        </style>
+    </noscript>
+
+    <!-- Global Elements -->
+    <div class="noise-overlay"></div>
+    
+    <!-- Preloader -->
+    <div id="preloader" class="preloader" style="background: #020202; position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; overflow: hidden;">
+        <div class="preloader-content text-center" style="width: 100%; padding: 0 20px; box-sizing: border-box;">
+            <h2 class="font-display text-gold preloader-logo title-gradient" style="font-size: clamp(2.5rem, 12vw, 4.5rem); text-shadow: 0 0 20px rgba(212,175,55,0.3); margin: 0; white-space: nowrap;">CLIP KINGS</h2>
+            <div class="preloader-line-wrapper" style="width: 80%; max-width: 250px; height: 1px; background: rgba(255,255,255,0.1); margin: 25px auto; position: relative; overflow: hidden;">
+                <div class="preloader-line" style="position: absolute; top:0; left:0; height:100%; width: 0%; background: var(--color-gold);"></div>
+            </div>
+            <span class="preloader-text font-accent" style="letter-spacing: 4px; font-size: 0.85rem; color: #888;">EST. 2024</span>
+        </div>
+    </div>
+
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="transition-layer gold"></div>
+    
+    <!-- Premium Barber Transition -->
+    <div class="barber-transition-overlay">
+        <div class="barber-slice slice-left" style="background: #050505;"></div>
+        <div class="barber-slice slice-right" style="background: #050505;"></div>
+        <div class="barber-logo font-display text-gold title-gradient">CLIP KINGS</div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center" style="background: linear-gradient(90deg, #AA8C2C 0%, #D4AF37 50%, #AA8C2C 100%); color: #000; padding: 12px; font-size: 0.85rem; position: relative; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.5);" role="alert">
+        <p class="font-accent tracking-wide mb-0"><strong>LIMITED SPOTS AVAILABLE</strong> | Elevate your style. <a href="book.html" style="color: #000; text-decoration: underline; font-weight: bold;">Reserve Now</a></p>
+    </div>
+
+    <!-- Consistent Header -->
+    <header id="header" class="site-header" style="background: rgba(3,3,3,0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05);" role="banner">
+        <div class="header-inner container-fluid">
+            <a href="index.html" class="logo font-display text-gold magnetic">CLIP KINGS</a>
+            <nav class="main-nav">
+                <a href="index.html" class="magnetic nav-link">Home</a>
+                <a href="about.html" class="magnetic nav-link">About</a>
+                <a href="services.html" class="magnetic nav-link">Services</a>
+                <a href="happy-hour.html" class="magnetic nav-link">Special Offers</a>
+                <a href="gallery.html" class="magnetic nav-link">Gallery</a>
+                <a href="transformations.html" class="magnetic nav-link">Transformations</a>
+                <a href="reviews.html" class="magnetic nav-link">Reviews</a>
+                <a href="blog.html" class="magnetic nav-link">Blog</a>
+                <a href="contact.html" class="magnetic nav-link">Contact</a>
+                <a href="book.html" class="magnetic nav-link text-gold" style="text-shadow: 0 0 10px rgba(212,175,55,0.4);">Book Now</a>
+            </nav>
+            <div class="header-actions">
+                <button class="menu-toggle magnetic" id="hamburger-btn">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu" style="background: rgba(5,5,5,0.98); backdrop-filter: blur(20px);">
+        <button class="close-menu magnetic" id="close-menu-btn">×</button>
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav">
+                <a href="index.html" class="mobile-link font-display nav-link">Home</a>
+                <a href="about.html" class="mobile-link font-display nav-link">About</a>
+                <a href="services.html" class="mobile-link font-display nav-link">Services</a>
+                <a href="happy-hour.html" class="mobile-link font-display nav-link">Special Offers</a>
+                <a href="gallery.html" class="mobile-link font-display nav-link">Gallery</a>
+                <a href="transformations.html" class="mobile-link font-display nav-link">Transformations</a>
+                <a href="reviews.html" class="mobile-link font-display nav-link">Reviews</a>
+                <a href="blog.html" class="mobile-link font-display nav-link">Blog</a>
+                <a href="contact.html" class="mobile-link font-display nav-link">Contact</a>
+                <a href="book.html" class="mobile-link font-display nav-link text-gold">Book Now</a>
+            </nav>
+        </div>
+    </div>
+
+    <main data-barba="container" data-barba-namespace="home">
+        <section class="error-hero" style="height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at center, #111, #050505); position: relative; overflow: hidden;">
+            <div class="error-number gs-reveal" style="font-size: clamp(8rem, 20vw, 15rem); line-height: 1; font-family: var(--font-display); background: linear-gradient(to bottom, var(--color-gold), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.15; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;">404</div>
+            <div class="container error-content gs-reveal" style="position: relative; z-index: 10;">
+                <h1 class="font-display massive-title text-white mb-3">LOST YOUR WAY, KING?</h1>
+                <p class="text-muted text-xl max-w-600 mx-auto mb-5">The page you are looking for has been moved, deleted, or never existed in the first place.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="index.html" class="btn btn-primary magnetic">RETURN TO HEADQUARTERS</a>
+                    <a href="book.html" class="btn btn-outline magnetic">BOOK AN APPOINTMENT</a>
+                </div>
+            </div>
+        </section>
+        </main>
+
+    <footer class="site-footer" style="background: #020202; padding: 80px 5vw 40px; border-top: 1px solid rgba(212,175,55,0.15);" role="contentinfo">
+        <div class="container" style="max-width: 1400px; margin: 0 auto;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 50px; gap: 40px;">
+                
+                <div>
+                    <h2 class="font-display text-gold mb-2 title-gradient" style="font-size: 2.5rem; animation: none; background-image: linear-gradient(to right, var(--color-gold), #fff);">CLIP KINGS</h2>
+                    <p class="font-accent text-muted text-sm uppercase tracking-wide" style="letter-spacing: 2px;">Premium Grooming Experience</p>
+                </div>
+
+                <nav style="display: flex; gap: 25px; flex-wrap: wrap;" aria-label="Footer Navigation">
+                    <a href="index.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">Home</a>
+                    <a href="services.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">Services</a>
+                    <a href="gallery.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">Gallery</a>
+                    <a href="transformations.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">Transformations</a>
+                    <a href="about.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">About</a>
+                    <a href="reviews.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">Reviews</a>
+                    <a href="happy-hour.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">Special Offers</a>
+                    <a href="contact.html" class="nav-link text-muted hover-gold" style="font-size: 0.9rem; letter-spacing: 1px;">Contact</a>
+                </nav>
+                
+                <div>
+                    <a href="book.html" class="btn btn-outline" style="padding: 12px 30px; font-size: 1rem;">Book Now</a>
+                </div>
+            </div>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;">
+                <p class="text-muted text-sm" style="font-family: 'Inter', sans-serif;">© <span id="year">2024</span> Clip Kings Barber Shop. All rights reserved.</p>
+                <nav style="display: flex; gap: 25px;" aria-label="Legal Links">
+                    <a href="privacy.html" class="text-muted hover-gold text-sm" style="text-decoration: none; letter-spacing: 1px;">Privacy Policy</a>
+                    <a href="terms.html" class="text-muted hover-gold text-sm" style="text-decoration: none; letter-spacing: 1px;">Terms of Service</a>
+                </nav>
+            </div>
+        </div>
+    
+    <div class="social-links-footer" style="display: flex; justify-content: center; gap: 20px; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%;">
+        <a href="https://www.instagram.com/clipkingsbarbershop" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        
+        <a href="https://g.page/r/CegNqH4dRaAQEAE/review" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Google Reviews">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </a>
+        <a href="https://booksy.com/en-ca/dl/show-business/24439?utm_medium=c2c_referral" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Booksy">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </a>
+    </div>
+
+</footer>
+
+    <!-- Exit Intent Popup -->
+    <div class="exit-popup-overlay" id="exit-popup" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 1000; align-items: center; justify-content: center;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+        <div class="exit-popup-content glass-panel" style="padding: 60px; max-width: 550px; text-align: center; position: relative;">
+            <button class="exit-close" id="exit-close-btn" style="position: absolute; top: 15px; right: 20px; font-size: 2.5rem; color: #fff; cursor: pointer; background: transparent; border: none; transition: color 0.3s;" aria-label="Close popup">&times;</button>
+            <h3 id="popup-title" class="font-display title-gradient mb-4" style="font-size: 2.5rem;">Wait! Don't Miss Your Best Look Yet.</h3>
+            <p class="text-muted mb-5" style="font-size: 1.2rem;">First-time clients receive a complimentary hot towel treatment with any fade.</p>
+            <a href="book.html" class="btn btn-primary cta-pulse magnetic" style="padding: 18px 40px; font-size: 1.1rem;">Claim Offer & Book</a>
+        </div>
+        <style>
+            .exit-close:hover { color: var(--color-gold) !important; }
+        </style>
+    </div>
+
+    <!-- Inline JS for Next-Level Card Tracking Effects -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.magnetic-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

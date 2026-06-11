@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://www.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://booksy.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/@barba/core" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="assets/js/chatbot.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+    
+    <style>
+        /* Essential Custom Styles */
+        :root {
+            --color-gold: #d4af37;
+            --bg-darker: #050505;
+            --bg-dark: #111111;
+        }
+
+        body { background-color: var(--bg-darker); color: #ffffff; margin: 0; overflow-x: hidden; }
+
+        .title-gradient {
+            background: linear-gradient(135deg, #fff 0%, var(--color-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            text-transform: uppercase; letter-spacing: 2px; font-family: 'Oswald', sans-serif;
+            text-decoration: none; transition: all 0.3s ease; cursor: pointer; text-align: center;
+        }
+        .btn-primary { background-color: var(--color-gold); color: #000; border: 1px solid var(--color-gold); font-weight: 600; }
+        .btn-primary:hover { background-color: transparent; color: var(--color-gold); box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .btn-outline { background-color: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); }
+        .btn-outline:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+        /* Booking Specific Styles */
+        .booking-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            padding-top: 80px;
+        }
+        
+        .trust-badge-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20,20,20,0.6);
+            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(212,175,55,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .trust-badge:hover {
+            border-color: var(--color-gold);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 15px rgba(212,175,55,0.2);
+            transform: translateY(-3px);
+        }
+        
+        .trust-badge svg { width: 18px; fill: var(--color-gold); }
+        
+        .review-snippet {
+            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(5,5,5,1));
+            border: 1px solid rgba(212,175,55,0.4);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 60px auto 20px;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(212,175,55,0.1);
+        }
+
+        /* Smooth FAQ Accordion */
+        .faq-item {
+            background: rgba(15,15,15,0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            border-color: rgba(212,175,55,0.3);
+            background: rgba(20,20,20,0.9);
+        }
+        .faq-question {
+            padding: 25px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        .faq-question:hover {
+            color: var(--color-gold);
+        }
+        .faq-icon {
+            color: var(--color-gold);
+            font-size: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            opacity: 0;
+            padding: 0 25px;
+            color: #aaa;
+            font-size: 1rem;
+            line-height: 1.6;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px; /* Arbitrary large number for slide-down */
+            opacity: 1;
+            padding-bottom: 25px;
+        }
+    </style>
+
+    <!-- SEO INJECTION START -->
+    <title>Book an Appointment | Clip Kings Barber Shop</title>
+    <meta name="description" content="Reserve your spot at Thornhill's luxury barbershop. Schedule your precision fade, haircut, or hot towel shave online today.">
+    <link rel="canonical" href="https://clipkingsbarber.shop/book.html">
+    <meta property="og:title" content="Book an Appointment | Clip Kings Barber Shop">
+    <meta property="og:description" content="Reserve your spot at Thornhill's luxury barbershop. Schedule your precision fade, haircut, or hot towel shave online today.">
+    <meta property="og:url" content="https://clipkingsbarber.shop/book.html">
+    <meta property="og:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Book an Appointment | Clip Kings Barber Shop">
+    <meta name="twitter:description" content="Reserve your spot at Thornhill's luxury barbershop. Schedule your precision fade, haircut, or hot towel shave online today.">
+    <meta name="twitter:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Clip Kings Barber Shop">
+    <meta name="theme-color" content="#d4af37">
+    <meta name="geo.region" content="CA-ON">
+    <meta name="geo.placename" content="Thornhill">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clipkingsbarber.shop/" },
+        { "@type": "ListItem", "position": 2, "name": "Book", "item": "https://clipkingsbarber.shop/book.html" }
+      ]
+    }
+    </script>
+    <!-- SEO INJECTION END -->
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+</head>
+<body class="loading" data-barba="wrapper">
+    <noscript>
+        <style>
+            .gs-reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+            .loading { overflow: visible !important; }
+        </style>
+    </noscript>
+
+    <!-- Global Elements -->
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="transition-layer gold"></div>
+    
+    <!-- Premium Barber Transition -->
+    <div class="barber-transition-overlay">
+        <div class="barber-slice slice-left"></div>
+        <div class="barber-slice slice-right"></div>
+        <div class="barber-logo font-display text-gold">CLIP KINGS</div>
+    </div>
+
+    
+    
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center" style="background: var(--color-gold); color: #000; padding: 10px; font-size: 0.85rem; position: relative; z-index: 1000;" role="alert">
+        <p class="font-accent tracking-wide mb-0"><strong>LIMITED SPOTS AVAILABLE</strong> | Elevate your style. <a href="book.html" style="color: #000; text-decoration: underline; font-weight: bold;">Reserve Now</a></p>
+    </div>
+
+    <!-- Consistent Header -->
+    <header id="header" class="site-header" style="background: rgba(5,5,5,0.9);" role="banner">
+        <div class="header-inner container-fluid">
+            <a href="index.html" class="logo font-display text-gold magnetic">CLIP KINGS</a>
+            <nav class="main-nav">
+                <a href="index.html" class="magnetic nav-link">Home</a>
+                <a href="about.html" class="magnetic nav-link">About</a>
+                <a href="services.html" class="magnetic nav-link">Services</a>
+                <a href="happy-hour.html" class="magnetic nav-link">Special Offers</a>
+                <a href="gallery.html" class="magnetic nav-link">Gallery</a>
+                <a href="transformations.html" class="magnetic nav-link">Transformations</a>
+                <a href="reviews.html" class="magnetic nav-link">Reviews</a>
+                <a href="blog.html" class="magnetic nav-link">Blog</a>
+                <a href="contact.html" class="magnetic nav-link">Contact</a>
+                <a href="book.html" class="magnetic nav-link text-gold">Book Now</a>
+            </nav>
+            <div class="header-actions">
+                <button class="menu-toggle magnetic" id="hamburger-btn">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <button class="close-menu magnetic" id="close-menu-btn">×</button>
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav">
+                <a href="index.html" class="mobile-link font-display nav-link">Home</a>
+                <a href="about.html" class="mobile-link font-display nav-link">About</a>
+                <a href="services.html" class="mobile-link font-display nav-link">Services</a>
+                <a href="happy-hour.html" class="mobile-link font-display nav-link">Special Offers</a>
+                <a href="gallery.html" class="mobile-link font-display nav-link">Gallery</a>
+                <a href="transformations.html" class="mobile-link font-display nav-link">Transformations</a>
+                <a href="reviews.html" class="mobile-link font-display nav-link">Reviews</a>
+                <a href="blog.html" class="mobile-link font-display nav-link">Blog</a>
+                <a href="contact.html" class="mobile-link font-display nav-link">Contact</a>
+                <a href="book.html" class="mobile-link font-display nav-link text-gold">Book Now</a>
+            </nav>
+        </div>
+    </div>
+<main data-barba="container" data-barba-namespace="book">
+        
+        <!-- Hero Section -->
+        <section class="booking-hero">
+            <div class="container gs-reveal">
+                
+                <span class="font-accent text-gold uppercase tracking-wide mb-3 block" style="font-size: 0.9rem; letter-spacing: 3px; display: block;">Official Portal</span>
+                <h1 class="font-display massive-title title-gradient mb-4" style="font-size: clamp(3.5rem, 7vw, 6rem); line-height: 1.1;">Secure Your Spot</h1>
+                <p class="text-white mb-5 max-w-600 mx-auto" style="font-size: 1.15rem; color: #ccc; line-height: 1.6;">Appointments fill up extremely fast. Book directly via our official Booksy portal below to guarantee your session with our masters.</p>
+                
+                <a href="https://booksy.com/en-ca/dl/show-business/24439?utm_medium=c2c_referral" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large cta-pulse magnetic" style="font-size: 1.2rem; padding: 20px 50px;">Continue to Booksy</a>
+                
+                <div class="trust-badge-container flex-wrap mt-5">
+                    <div class="trust-badge magnetic">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                        Secure Booking
+                    </div>
+                    <div class="trust-badge magnetic">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg>
+                        5.0 Google Rating
+                    </div>
+                    <div class="trust-badge magnetic">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        Instant Confirmation
+                    </div>
+                </div>
+
+                <div class="review-snippet magnetic">
+                    <div class="text-gold mb-3" style="font-size: 1.5rem; letter-spacing: 5px;">★★★★★</div>
+                    <p class="text-white font-body mb-3 italic" style="font-size: 1.1rem; line-height: 1.6;">"Best booking experience ever. Walked in, sat down immediately at my exact time. Perfect fade and incredible service."</p>
+                    <p class="text-gold font-accent text-sm uppercase tracking-wide mb-0" style="letter-spacing: 2px;">- Verified Client</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section-padding bg-darker border-top-muted gs-reveal" style="padding: 100px 5vw; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="container" style="max-width: 800px; margin: 0 auto;">
+                <div class="text-center mb-5">
+                    <span class="font-accent text-gold uppercase tracking-wide" style="font-size: 0.9rem; letter-spacing: 2px;">Need to know</span>
+                    <h2 class="font-display h2 mt-2 text-white" style="font-size: clamp(2rem, 4vw, 3rem);">Booking Policies & FAQ</h2>
+                </div>
+                
+                <div class="faq-container">
+                    <div class="faq-item magnetic">
+                        <div class="faq-question">What happens if I'm late? <span class="faq-icon">+</span></div>
+                        <div class="faq-answer">We grant a strict 10-minute grace period. If you arrive later than 10 minutes past your scheduled time, your appointment may be cancelled or modified to a shorter service to respect the next client's time and maintain our high standards.</div>
+                    </div>
+
+                    <div class="faq-item magnetic">
+                        <div class="faq-question">Do you accept walk-ins? <span class="faq-icon">+</span></div>
+                        <div class="faq-answer">While we accept walk-ins based on availability, we highly recommend booking in advance. Our master barbers are typically fully booked for the day, and reserving a spot guarantees your time.</div>
+                    </div>
+
+                    <div class="faq-item magnetic">
+                        <div class="faq-question">What is your Cancellation Policy? <span class="faq-icon">+</span></div>
+                        <div class="faq-answer">Please cancel or reschedule at least 12 hours in advance via the Booksy app or by calling the shop. No-shows or late cancellations disrupt the schedule and may be subject to a fee applied on your next visit.</div>
+                    </div>
+                    
+                    <div class="faq-item magnetic">
+                        <div class="faq-question">Do I need to wash my hair before arriving? <span class="faq-icon">+</span></div>
+                        <div class="faq-answer">It is always appreciated if you arrive with clean hair free of heavy products (like thick pomades or gels). However, if you select one of our VIP Packages, a premium hair wash is already included in the service.</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer bg-darker border-top-muted" style="border-top: 1px solid rgba(255,255,255,0.05); padding: 60px 20px 30px; background: #000;">
+        <div class="container text-center" style="max-width: 1400px; margin: 0 auto;">
+            <h2 class="font-display text-gold mb-4" style="font-size: 2rem;">CLIP KINGS</h2>
+            <nav class="footer-nav mb-5" style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                <a href="contact.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Contact</a>
+                <a href="faq.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">FAQ</a>
+                <a href="privacy.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Privacy</a>
+                <a href="terms.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Terms</a>
+                <a href="sitemap.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Sitemap</a>
+            </nav>
+            <div class="copyright pt-4" style="border-top: 1px solid rgba(255,255,255,0.05); color: #555; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                <p>© <span id="year">2024</span> Clip Kings Barber Shop. All rights reserved.</p>
+            </div>
+        </div>
+    
+    <div class="social-links-footer" style="display: flex; justify-content: center; gap: 20px; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%;">
+        <a href="https://www.instagram.com/clipkingsbarbershop" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        
+        <a href="https://g.page/r/CegNqH4dRaAQEAE/review" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Google Reviews">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </a>
+        <a href="https://booksy.com/en-ca/dl/show-business/24439?utm_medium=c2c_referral" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Booksy">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </a>
+    </div>
+
+</footer>
+
+    <!-- Exit Intent Popup -->
+    <div class="exit-popup-overlay" id="exit-popup" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="exit-popup-content" style="background: #111; border: 1px solid var(--color-gold); padding: 50px; max-width: 500px; text-align: center; position: relative; border-radius: 4px;">
+            <span class="exit-close" id="exit-close-btn" style="position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #fff; cursor: pointer;">&times;</span>
+            <h3 class="font-display text-gold mb-3" style="font-size: 2rem;">Wait! Don't Miss Your Best Look Yet.</h3>
+            <p class="text-muted mb-4" style="color: #aaa; line-height: 1.5;">First-time clients receive a complimentary hot towel treatment with any fade.</p>
+            <a href="book.html" class="btn btn-primary cta-pulse magnetic" style="padding: 15px 30px; width: 100%; box-sizing: border-box;">Claim Offer & Book</a>
+        </div>
+    </div>
+
+    
+</body>
+</html>

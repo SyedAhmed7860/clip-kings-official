@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://www.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://booksy.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/@barba/core" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="assets/js/chatbot.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+    
+    <style>
+        html, body {
+            overflow-x: hidden; /* CRITICAL FIX: Eliminates mobile horizontal scroll wobble */
+            width: 100%;
+            position: relative;
+        }
+
+        :root {
+            --color-gold: #d4af37;
+            --bg-darker: #050505;
+            --bg-dark: #111111;
+        }
+
+        body { 
+            background-color: var(--bg-darker); 
+            color: #ffffff; 
+            margin: 0; 
+        }
+        
+        main {
+            overflow-x: hidden; /* Extra safety for GSAP animations expanding beyond viewport */
+        }
+
+        .title-gradient {
+            background: linear-gradient(135deg, #fff 0%, var(--color-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            text-transform: uppercase; letter-spacing: 2px; font-family: 'Oswald', sans-serif;
+            text-decoration: none; transition: all 0.3s ease; cursor: pointer; text-align: center;
+        }
+        .btn-primary { background-color: var(--color-gold); color: #000; border: 1px solid var(--color-gold); font-weight: 600; padding: 15px 30px;}
+        .btn-primary:hover { background-color: transparent; color: var(--color-gold); box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .btn-outline { background-color: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); padding: 15px 30px;}
+        .btn-outline:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+        /* Audio Toggle Button */
+        .audio-toggle {
+            position: absolute; bottom: 40px; right: 5vw; z-index: 50;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+            border: 1px solid rgba(212,175,55,0.3); color: var(--color-gold);
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;
+        }
+        .audio-toggle:hover { background: var(--color-gold); color: #000; transform: scale(1.1); }
+
+        .timeline-container { position: relative; max-width: 800px; margin: 0 auto; padding: 60px 0; }
+        .timeline-line { position: absolute; left: 60px; top: 0; bottom: 0; width: 2px; background: rgba(255, 255, 255, 0.1); z-index: 1; }
+        .timeline-progress { position: absolute; left: -1px; top: 0; width: 4px; background: var(--color-gold); z-index: 2; box-shadow: 0 0 15px var(--color-gold); }
+        .timeline-item { position: relative; padding-left: 140px; margin-bottom: 70px; z-index: 3; }
+        .timeline-dot {
+            position: absolute; left: 51px; top: 5px; width: 20px; height: 20px; border-radius: 50%;
+            background: var(--bg-darker); border: 3px solid var(--color-gold); z-index: 4; transition: all 0.4s;
+        }
+        .timeline-item:hover .timeline-dot { background: var(--color-gold); box-shadow: 0 0 20px var(--color-gold); transform: scale(1.2); }
+        .timeline-year { position: absolute; left: -60px; width: 80px; text-align: right; top: 0; font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--color-gold); font-weight: 700; text-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .timeline-content {
+            background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05); padding: 40px; border-radius: 12px; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .timeline-content:hover { transform: translateX(15px); border-color: rgba(212, 175, 55, 0.5); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+
+        .team-card {
+            display: flex; flex-direction: column; gap: 40px;
+            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(5,5,5,0.95));
+            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 16px; padding: 50px;
+            margin-bottom: 60px; align-items: center; text-align: center; transition: all 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .team-card:hover { transform: translateY(-5px); border-color: rgba(212,175,55,0.6); box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px rgba(212,175,55,0.1); }
+        .team-img-wrapper { width: 220px; height: 220px; flex-shrink: 0; border-radius: 50%; overflow: hidden; border: 3px solid var(--color-gold); padding: 5px; background: #000; box-shadow: inset 0 0 20px rgba(212,175,55,0.5); }
+        .team-img-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: transform 0.5s ease; filter: grayscale(20%); }
+        .team-card:hover .team-img-wrapper img { transform: scale(1.05); filter: grayscale(0%); }
+        .team-info { flex-grow: 1; }
+        
+        .skill-badge {
+            display: inline-block; background: rgba(212,175,55,0.05); color: var(--color-gold);
+            padding: 8px 15px; border: 1px solid rgba(212,175,55,0.3); border-radius: 30px;
+            font-size: 0.85rem; font-family: 'Oswald', sans-serif; letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        .stats-grid-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-top: 60px; }
+
+        @media (min-width: 992px) {
+            .team-card { flex-direction: row; text-align: left; align-items: flex-start; }
+            .team-card.reverse { flex-direction: row-reverse; text-align: right; }
+            .skill-wrapper { justify-content: flex-start; }
+            .team-card.reverse .skill-wrapper { justify-content: flex-end; }
+            
+            /* Nav Fixes */
+            .desktop-btn { display: inline-flex !important; }
+            .menu-toggle { display: none !important; } /* Hide hamburger on desktop */
+        }
+        
+        @media (max-width: 991px) {
+            .desktop-btn { display: none !important; }
+            .menu-toggle { display: flex; } /* Show hamburger on mobile/tablet */
+        }
+        
+        @media (max-width: 768px) {
+            /* Mobile Timeline Layout Fixes */
+            .timeline-line { left: 20px; }
+            .timeline-item { padding-left: 60px; }
+            .timeline-dot { left: 11px; }
+            .timeline-year { 
+                position: relative; /* Fixed overflow issue */
+                left: 0; 
+                display: block; 
+                margin-bottom: 10px; 
+                text-align: left; 
+                font-size: 1.4rem;
+            }
+            .skill-wrapper { justify-content: center !important; }
+            .team-card { padding: 30px 20px; } /* Less padding on small screens */
+        }
+    </style>
+
+    <!-- SEO INJECTION START -->
+    <title>About Us | The Master Barbers of Clip Kings</title>
+    <meta name="description" content="Discover the story behind Thornhill's premier luxury barbershop. Meet our master barbers and experience the ultimate standard in men's grooming.">
+    <link rel="canonical" href="https://clipkingsbarber.shop/about.html">
+    <meta property="og:title" content="About Us | The Master Barbers of Clip Kings">
+    <meta property="og:description" content="Discover the story behind Thornhill's premier luxury barbershop. Meet our master barbers and experience the ultimate standard in men's grooming.">
+    <meta property="og:url" content="https://clipkingsbarber.shop/about.html">
+    <meta property="og:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Us | The Master Barbers of Clip Kings">
+    <meta name="twitter:description" content="Discover the story behind Thornhill's premier luxury barbershop. Meet our master barbers and experience the ultimate standard in men's grooming.">
+    <meta name="twitter:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Clip Kings Barber Shop">
+    <meta name="theme-color" content="#d4af37">
+    <meta name="geo.region" content="CA-ON">
+    <meta name="geo.placename" content="Thornhill">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "mainEntity": { "@id": "https://clipkingsbarber.shop/#organization" },
+      "url": "https://clipkingsbarber.shop/about.html"
+    }
+    </script>
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clipkingsbarber.shop/" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://clipkingsbarber.shop/about.html" }
+      ]
+    }
+    </script>
+    <!-- SEO INJECTION END -->
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+</head>
+<body class="loading" data-barba="wrapper">
+    <noscript>
+        <style>
+            .gs-reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+            .loading { overflow: visible !important; }
+        </style>
+    </noscript>
+
+    <!-- Global Elements -->
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="transition-layer gold"></div>
+    
+    <!-- Premium Barber Transition -->
+    <div class="barber-transition-overlay">
+        <div class="barber-slice slice-left"></div>
+        <div class="barber-slice slice-right"></div>
+        <div class="barber-logo font-display text-gold">CLIP KINGS</div>
+    </div>
+
+    
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center" style="background: var(--color-gold); color: #000; padding: 10px; font-size: 0.85rem; position: relative; z-index: 1000;" role="alert">
+        <p class="font-accent tracking-wide mb-0"><strong>LIMITED SPOTS AVAILABLE</strong> | Elevate your style. <a href="book.html" style="color: #000; text-decoration: underline; font-weight: bold;">Reserve Now</a></p>
+    </div>
+
+    <!-- Consistent Header -->
+    <header id="header" class="site-header" style="background: rgba(5,5,5,0.9);" role="banner">
+        <div class="header-inner container-fluid">
+            <a href="index.html" class="logo font-display text-gold magnetic">CLIP KINGS</a>
+            <nav class="main-nav">
+                <a href="index.html" class="magnetic nav-link">Home</a>
+                <a href="about.html" class="magnetic nav-link">About</a>
+                <a href="services.html" class="magnetic nav-link">Services</a>
+                <a href="happy-hour.html" class="magnetic nav-link">Special Offers</a>
+                <a href="gallery.html" class="magnetic nav-link">Gallery</a>
+                <a href="transformations.html" class="magnetic nav-link">Transformations</a>
+                <a href="reviews.html" class="magnetic nav-link">Reviews</a>
+                <a href="blog.html" class="magnetic nav-link">Blog</a>
+                <a href="contact.html" class="magnetic nav-link">Contact</a>
+                <a href="book.html" class="magnetic nav-link text-gold">Book Now</a>
+            </nav>
+            <div class="header-actions">
+                <button class="menu-toggle magnetic" id="hamburger-btn">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <button class="close-menu magnetic" id="close-menu-btn">×</button>
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav">
+                <a href="index.html" class="mobile-link font-display nav-link">Home</a>
+                <a href="about.html" class="mobile-link font-display nav-link">About</a>
+                <a href="services.html" class="mobile-link font-display nav-link">Services</a>
+                <a href="happy-hour.html" class="mobile-link font-display nav-link">Special Offers</a>
+                <a href="gallery.html" class="mobile-link font-display nav-link">Gallery</a>
+                <a href="transformations.html" class="mobile-link font-display nav-link">Transformations</a>
+                <a href="reviews.html" class="mobile-link font-display nav-link">Reviews</a>
+                <a href="blog.html" class="mobile-link font-display nav-link">Blog</a>
+                <a href="contact.html" class="mobile-link font-display nav-link">Contact</a>
+                <a href="book.html" class="mobile-link font-display nav-link text-gold">Book Now</a>
+            </nav>
+        </div>
+    </div>
+<main data-barba="container" data-barba-namespace="about">
+        
+        <header id="hero-section" class="page-header" style="position: relative; height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; margin-top: 0;">
+            <!-- CORRECTED VIDEO PATH TO hero-bg.mp4 -->
+            <video id="hero-video" autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4);">
+                <source src="assets/images/about-hero-bg.mp4" type="video/mp4">
+                <img fetchpriority="high" src="assets/images/hero-bg.webp" alt="Barber Shop Background" style="width: 100%; height: 100%; object-fit: cover;" decoding="async">
+            </video>
+            
+            <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, var(--bg-darker) 100%); z-index: 1;"></div>
+            
+            <div class="container gs-reveal" style="position: relative; z-index: 10; padding: 0 5vw;">
+                <span class="font-accent text-gold uppercase tracking-wide mb-2 block" style="letter-spacing: 3px; font-size: 0.9rem; display: block;">Our Legacy</span>
+                <h1 class="font-display massive-title title-gradient mt-2" style="font-size: clamp(2.5rem, 6vw, 6rem); line-height: 1.1;">The Kingdom<br>Behind The Chair</h1>
+                <p class="text-muted max-w-600 mx-auto mt-4" style="font-size: 1.2rem; font-family: 'Inter', sans-serif;">Forged in Thornhill, built for Kings.</p>
+            </div>
+
+            <!-- Audio Toggle Button -->
+            <button class="audio-toggle magnetic" id="audio-btn" aria-label="Toggle Audio">
+                <svg id="audio-icon-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+                <svg id="audio-icon-playing" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+            </button>
+        </header>
+
+        <section class="section-padding gs-reveal" style="padding: 100px 5vw;">
+            <div class="container text-center" style="max-width: 900px; margin: 0 auto;">
+                <h2 class="font-display text-gold mb-4" style="font-size: 2.5rem;">Our Story</h2>
+                <p class="font-body text-white mb-4 italic" style="font-size: clamp(1.1rem, 3vw, 1.8rem); line-height: 1.8; font-weight: 300;">
+                    "Our mission is to redefine male grooming by merging the architectural precision of modern design with the timeless respect of traditional barbering. We don't just cut hair; we sculpt absolute confidence."
+                </p>
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker gs-reveal" id="timeline-section" style="border-top: 1px solid rgba(212,175,55,0.1); padding: 100px 5vw;">
+            <div class="container" style="max-width: 1000px; margin: 0 auto;">
+                <h2 class="font-display text-center mb-5 title-gradient" style="font-size: clamp(2.5rem, 4vw, 3.5rem);">The Rise of the Kingdom</h2>
+                
+                <div class="timeline-container">
+                    <div class="timeline-line">
+                        <div class="timeline-progress" id="timeline-progress"></div>
+                    </div>
+                    
+                    <div class="timeline-item gs-reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-content magnetic">
+                            <h4 class="font-display text-white mb-3" style="font-size: 1.5rem;">The Concept</h4>
+                            <p class="text-muted" style="font-size: 1.05rem; line-height: 1.7;">AJ conceptualizes Clip Kings, realizing that Thornhill lacked a truly premium, uncompromised grooming space tailored exclusively for modern gentlemen.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item gs-reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-content magnetic">
+                            <h4 class="font-display text-white mb-3" style="font-size: 1.5rem;">The Foundation</h4>
+                            <p class="text-muted" style="font-size: 1.05rem; line-height: 1.7;">The first chair is established. The focus is strictly set on absolute quality over quantity, leading to a rapidly growing, fiercely loyal clientele.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item gs-reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content magnetic">
+                            <h4 class="font-display text-white mb-3" style="font-size: 1.5rem;">The Expansion</h4>
+                            <p class="text-muted" style="font-size: 1.05rem; line-height: 1.7;">Clip Kings officially launches its luxury storefront on Steeles Ave W, bringing in top-tier talent like Moe to expand the empire and elevate the standard.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding gs-reveal" style="padding: 120px 5vw;">
+            <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                <div class="text-center mb-5" style="margin-bottom: 80px;">
+                    <span class="font-accent text-gold uppercase tracking-wide" style="letter-spacing: 3px; font-size: 0.9rem;">The Masters</span>
+                    <h2 class="font-display text-white mt-3" style="font-size: clamp(2.5rem, 5vw, 4.5rem);">Meet The Kings</h2>
+                </div>
+                
+                <!-- AJ Profile -->
+                <div class="team-card gs-reveal">
+                    <div class="team-img-wrapper">
+                        <img loading="lazy" src="assets/images/team-aj.webp?v=fresh" alt="AJ - Master Barber" style="object-position: top;" decoding="async">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="font-display text-white mb-1" style="font-size: 2.5rem;">AJ</h3>
+                        <p class="font-accent text-gold uppercase tracking-wide mb-4" style="font-size: 1rem; letter-spacing: 2px;">Founder / Master Barber</p>
+                        
+                        <p class="text-white italic mb-4" style="font-size: 1.15rem; line-height: 1.6; border-left: 2px solid var(--color-gold); padding-left: 20px;">
+                            "Precision is not an option, it's a requirement. We built this space for men who understand the value of a flawless image."
+                        </p>
+                        
+                        <p class="text-muted mb-4" style="font-size: 1rem; line-height: 1.7;">
+                            With over a decade of mastery in the barbering industry, AJ has redefined what a luxury grooming experience should be. His philosophy centers around structural face-mapping, ensuring every skin fade and scissor cut perfectly complements the client's bone structure. From zero-fades to executive business contours, AJ's chair is a destination for the elite.
+                        </p>
+
+                        <div class="skill-wrapper" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px;">
+                            <span class="skill-badge">Skin Fades</span>
+                            <span class="skill-badge">Scissor Work</span>
+                            <span class="skill-badge">10+ Years Exp</span>
+                        </div>
+                        <a href="book.html" class="btn btn-primary cta-pulse magnetic">Book Session with AJ</a>
+                    </div>
+                </div>
+
+                <!-- Moe Profile -->
+                <div class="team-card reverse gs-reveal">
+                    <div class="team-img-wrapper">
+                        <img src="assets/images/team-moe.webp?v=fresh" alt="Moe - Master Barber" style="object-position: top;" loading="lazy" decoding="async">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="font-display text-white mb-1" style="font-size: 2.5rem;">Moe</h3>
+                        <p class="font-accent text-gold uppercase tracking-wide mb-4" style="font-size: 1rem; letter-spacing: 2px;">Co-Founder / Master Barber</p>
+                        
+                        <p class="text-white italic mb-4" style="font-size: 1.15rem; line-height: 1.6; border-right: 2px solid var(--color-gold); padding-right: 20px;">
+                            "The straight razor is an instrument of relaxation. I ensure every client leaves the chair completely rejuvenated."
+                        </p>
+                        
+                        <p class="text-muted mb-4" style="font-size: 1rem; line-height: 1.7;">
+                            Moe brings an artisanal touch to the Clip Kings team, specializing in traditional hot towel shaves and intricate beard sculpting. Having honed his craft across multiple premium shops, he combines old-world shaving techniques with modern styling trends. For Moe, grooming is not just a service—it's a restorative ritual.
+                        </p>
+
+                        <div class="skill-wrapper" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px;">
+                            <span class="skill-badge">Hot Towel Shaves</span>
+                            <span class="skill-badge">Beard Sculpting</span>
+                            <span class="skill-badge">8 Years Exp</span>
+                        </div>
+                        <a href="book.html" class="btn btn-outline magnetic">Book Session with Moe</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section-padding bg-darker gs-reveal" style="border-top: 1px solid rgba(255,255,255,0.05); padding: 100px 5vw;" id="stats-section">
+            <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                <h2 class="font-display text-center mb-4 title-gradient" style="font-size: clamp(2.5rem, 4vw, 3.5rem);">The Clip Kings Culture</h2>
+                <p class="text-center text-muted mx-auto" style="max-width: 800px; font-size: 1.1rem; line-height: 1.8;">
+                    We uphold the highest training standards in the industry. Our shop environment is curated to provide ultimate relaxation, professionalism, and exclusivity.
+                </p>
+                
+                <div class="stats-grid-row text-center">
+                    <div class="stat-item magnetic" style="background: rgba(15,15,15,0.5); padding: 40px 20px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.1);">
+                        <h3 class="font-display text-gold counter-num" data-target="700" style="font-size: clamp(3rem, 5vw, 4rem); margin-bottom: 10px;">0<span style="font-size: 0.7em;">+</span></h3>
+                        <p class="font-accent text-white uppercase tracking-wide" style="letter-spacing: 2px;">Monthly Client Visits</p>
+                    </div>
+                    <div class="stat-item magnetic" style="background: rgba(15,15,15,0.5); padding: 40px 20px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.1);">
+                        <h3 class="font-display text-gold counter-num" data-target="730" style="font-size: clamp(3rem, 5vw, 4rem); margin-bottom: 10px;">0</h3>
+                        <p class="font-accent text-white uppercase tracking-wide" style="letter-spacing: 2px;">5-Star Reviews</p>
+                    </div>
+                    <div class="stat-item magnetic" style="background: rgba(15,15,15,0.5); padding: 40px 20px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.1);">
+                        <h3 class="font-display text-gold counter-num" data-target="18" style="font-size: clamp(3rem, 5vw, 4rem); margin-bottom: 10px;">0</h3>
+                        <p class="font-accent text-white uppercase tracking-wide" style="letter-spacing: 2px;">Years Combined Exp</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding text-center gs-reveal" style="background: linear-gradient(to bottom, var(--bg-darker), #000); padding: 120px 5vw;">
+            <div class="container" style="max-width: 800px; margin: 0 auto;">
+                <h2 class="font-display text-white mb-4" style="font-size: clamp(2.5rem, 5vw, 4rem);">Ready to experience the standard?</h2>
+                <p class="text-muted mb-5" style="font-size: 1.2rem;">Join the ranks of Thornhill's best-groomed gentlemen.</p>
+                <a href="book.html" class="btn btn-primary btn-large cta-pulse magnetic" style="font-size: 1.2rem; padding: 20px 50px;">Join The Kingdom</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer" style="background: #000; padding: 60px 5vw 30px; border-top: 1px solid rgba(212,175,55,0.2);" role="contentinfo">
+        <div class="container" style="max-width: 1400px; margin: 0 auto;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 40px; gap: 30px;">
+                
+                <div>
+                    <h2 class="font-display text-gold mb-2" style="font-size: 2rem;">CLIP KINGS</h2>
+                    <p class="font-accent text-muted text-sm uppercase tracking-wide">Premium Grooming Experience</p>
+                </div>
+
+                <nav style="display: flex; gap: 20px; flex-wrap: wrap;" aria-label="Footer Navigation">
+                    <a href="index.html" class="nav-link text-muted" style="font-size: 0.8rem;">Home</a>
+                    <a href="services.html" class="nav-link text-muted" style="font-size: 0.8rem;">Services</a>
+                    <a href="gallery.html" class="nav-link text-muted" style="font-size: 0.8rem;">Gallery</a>
+                    <a href="transformations.html" class="nav-link text-muted" style="font-size: 0.8rem;">Transformations</a>
+                    <a href="about.html" class="nav-link text-gold" style="font-size: 0.8rem; font-weight: bold;">About</a>
+                    <a href="reviews.html" class="nav-link text-muted" style="font-size: 0.8rem;">Reviews</a>
+                    <a href="happy-hour.html" class="nav-link text-muted" style="font-size: 0.8rem;">Special Offers</a>
+                    <a href="blog.html" class="nav-link text-muted" style="font-size: 0.8rem;">Blog</a>
+                    <a href="contact.html" class="nav-link text-muted" style="font-size: 0.8rem;">Contact</a>
+                </nav>
+                
+                <div>
+                    <a href="book.html" class="btn btn-outline" style="padding: 10px 25px; font-size: 0.9rem;">Book Now</a>
+                </div>
+            </div>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                <p class="text-muted text-sm" style="font-family: 'Inter', sans-serif;">© <span id="year">2024</span> Clip Kings Barber Shop. All rights reserved.</p>
+                <nav style="display: flex; gap: 20px;" aria-label="Legal Links">
+                    <a href="privacy.html" class="text-muted hover-gold text-sm" style="text-decoration: none;">Privacy Policy</a>
+                    <a href="terms.html" class="text-muted hover-gold text-sm" style="text-decoration: none;">Terms of Service</a>
+                </nav>
+            </div>
+        </div>
+    
+    <div class="social-links-footer" style="display: flex; justify-content: center; gap: 20px; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%;">
+        <a href="https://www.instagram.com/clipkingsbarbershop" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        
+        <a href="https://g.page/r/CegNqH4dRaAQEAE/review" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Google Reviews">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </a>
+        <a href="https://booksy.com/en-ca/dl/show-business/24439?utm_medium=c2c_referral" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Booksy">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </a>
+    </div>
+
+</footer>
+
+    <div class="exit-popup-overlay" id="exit-popup" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+        <div class="exit-popup-content" style="background: #111; border: 1px solid var(--color-gold); padding: 50px; max-width: 500px; text-align: center; position: relative; border-radius: 4px;">
+            <button class="exit-close" id="exit-close-btn" style="position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #fff; cursor: pointer; background: transparent; border: none;" aria-label="Close popup">&times;</button>
+            <h3 id="popup-title" class="font-display text-gold mb-3" style="font-size: 2rem;">Wait! Don't Miss Your Best Look Yet.</h3>
+            <p class="text-muted mb-4">First-time clients receive a complimentary hot towel treatment with any fade.</p>
+            <a href="book.html" class="btn btn-primary cta-pulse magnetic" style="padding: 15px 30px;">Claim Offer & Book</a>
+        </div>
+    </div>
+
+    
+</body>
+</html>

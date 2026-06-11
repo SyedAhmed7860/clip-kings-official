@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://www.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://booksy.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/@barba/core" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="assets/js/chatbot.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+    
+    <style>
+        /* Essential Custom Styles for Consistency */
+        :root {
+            --color-gold: #d4af37;
+            --bg-darker: #050505;
+            --bg-dark: #111111;
+        }
+        body { background-color: var(--bg-darker); color: #ffffff; margin: 0; overflow-x: hidden; }
+
+        .title-gradient {
+            background: linear-gradient(135deg, #fff 0%, var(--color-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            text-transform: uppercase; letter-spacing: 2px; font-family: 'Oswald', sans-serif;
+            text-decoration: none; transition: all 0.3s ease; cursor: pointer; text-align: center;
+        }
+        .btn-primary { background-color: var(--color-gold); color: #000; border: 1px solid var(--color-gold); font-weight: 600; }
+        .btn-primary:hover { background-color: transparent; color: var(--color-gold); }
+        .btn-outline { background-color: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); }
+        .btn-outline:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+        /* Netflix-Style Image Rows */
+        .netflix-row { margin-bottom: 80px; position: relative; z-index: 10;}
+        .netflix-row h3 { padding-left: 5vw; margin-bottom: 25px; font-size: 1.8rem; font-family: 'Cinzel', serif; color: #fff; }
+        .netflix-slider { display: flex; gap: 20px; padding: 0 5vw 40px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+        .netflix-slider::-webkit-scrollbar { display: none; }
+        
+        .netflix-item { 
+            min-width: 350px; height: 200px; position: relative; border-radius: 8px; overflow: hidden; 
+            flex-shrink: 0; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); cursor: pointer; 
+            border: 1px solid rgba(255,255,255,0.1); background: #000; 
+        }
+        .netflix-item:hover { 
+            transform: scale(1.08) translateY(-10px); z-index: 20; border-color: var(--color-gold); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 20px rgba(212,175,55,0.3); 
+        }
+        .netflix-item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); transition: filter 0.5s; }
+        .netflix-item:hover img { filter: brightness(1); }
+        
+        .item-title { 
+            position: absolute; bottom: 15px; left: 20px; font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 2px;
+            color: #fff; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.9); opacity: 0; transform: translateY(10px); transition: all 0.4s; 
+        }
+        .netflix-item:hover .item-title { opacity: 1; transform: translateY(0); color: var(--color-gold); }
+
+        .row-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent); margin: 60px 0; }
+
+        /* Director's Cut Video Reels Section (9:16 Aspect Ratio) */
+        .reel-slider { 
+            display: flex; gap: 30px; padding: 20px 5vw 80px; overflow-x: auto; 
+            scroll-behavior: smooth; scrollbar-width: none; scroll-snap-type: x mandatory;
+        }
+        .reel-slider::-webkit-scrollbar { display: none; }
+        
+        .reel-card { 
+            flex: 0 0 auto; width: clamp(260px, 75vw, 320px); aspect-ratio: 9/16; 
+            border-radius: 16px; overflow: hidden; position: relative; scroll-snap-align: center; 
+            border: 1px solid rgba(255,255,255,0.1); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            background: #050505; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .reel-card video { 
+            width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: all 0.5s; 
+        }
+        .reel-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 40%);
+            pointer-events: none; opacity: 0.8; transition: opacity 0.5s;
+        }
+        
+        /* The Magic Hover Effect for Videos */
+        .reel-card:hover { 
+            transform: scale(1.05) translateY(-15px); z-index: 20; border-color: var(--color-gold); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.3); 
+        }
+        .reel-card:hover video { filter: brightness(1.1); }
+        .reel-card:hover .reel-overlay { opacity: 1; }
+
+        /* Play icon indicating it's clickable */
+        .play-indicator {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60px; height: 60px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+            border: 2px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s ease; opacity: 0;
+        }
+        .play-indicator svg { fill: #fff; width: 24px; height: 24px; margin-left: 2px; transition: fill 0.3s; }
+        .reel-card:hover .play-indicator { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+
+        .reel-label {
+            position: absolute; bottom: 25px; left: 20px; right: 20px;
+            display: flex; align-items: center; gap: 10px;
+            transform: translateY(15px); opacity: 0.7; transition: all 0.4s ease;
+        }
+        .reel-card:hover .reel-label { transform: translateY(0); opacity: 1; }
+        .reel-label-dot { width: 8px; height: 8px; background: var(--color-gold); border-radius: 50%; box-shadow: 0 0 10px var(--color-gold); }
+        .reel-label-text { font-family: 'Oswald', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; color: #fff; }
+
+        /* Instagram CTA Card */
+        .ig-cta-card {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: linear-gradient(145deg, #111, #050505); border: 2px dashed rgba(212,175,55,0.4);
+            text-align: center; padding: 30px;
+        }
+        .ig-cta-card:hover { border: 2px solid var(--color-gold); background: linear-gradient(145deg, #1a1a1a, #0a0a0a); }
+        .ig-icon-large { width: 60px; height: 60px; fill: var(--color-gold); margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(212,175,55,0.5)); }
+
+        /* Fullscreen Video Modal / Lightbox */
+        .video-modal-overlay {
+            position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
+            display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease;
+        }
+        .video-modal-content {
+            position: relative; width: 100%; max-width: 450px; aspect-ratio: 9/16; border-radius: 16px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.3); border: 1px solid rgba(212,175,55,0.5);
+            background: #000; display: flex; align-items: center; justify-content: center;
+        }
+        .video-modal-content video {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 15px; outline: none;
+        }
+        .close-video-modal {
+            position: absolute; top: -50px; right: 0; color: #fff; font-size: 3rem; cursor: pointer; transition: color 0.3s ease;
+        }
+        .close-video-modal:hover { color: var(--color-gold); }
+
+        @media (max-width: 768px) { 
+            .netflix-item { min-width: 280px; height: 160px; } 
+            .netflix-row h3 { font-size: 1.5rem; }
+            .video-modal-content { max-width: 90vw; max-height: 80vh; aspect-ratio: auto; }
+            .close-video-modal { right: 10px; top: -60px; }
+        }
+    </style>
+
+    <!-- SEO INJECTION START -->
+    <title>Haircut Gallery | Master Fades & Styles | Clip Kings</title>
+    <meta name="description" content="View our gallery of precision haircuts, elite fades, and master beard sculpting. See why Clip Kings is the top-rated barbershop in Thornhill.">
+    <link rel="canonical" href="https://clipkingsbarber.shop/gallery.html">
+    <meta property="og:title" content="Haircut Gallery | Master Fades & Styles | Clip Kings">
+    <meta property="og:description" content="View our gallery of precision haircuts, elite fades, and master beard sculpting. See why Clip Kings is the top-rated barbershop in Thornhill.">
+    <meta property="og:url" content="https://clipkingsbarber.shop/gallery.html">
+    <meta property="og:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Haircut Gallery | Master Fades & Styles | Clip Kings">
+    <meta name="twitter:description" content="View our gallery of precision haircuts, elite fades, and master beard sculpting. See why Clip Kings is the top-rated barbershop in Thornhill.">
+    <meta name="twitter:image" content="https://clipkingsbarber.shop/assets/images/hero-bg.webp">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Clip Kings Barber Shop">
+    <meta name="theme-color" content="#d4af37">
+    <meta name="geo.region" content="CA-ON">
+    <meta name="geo.placename" content="Thornhill">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clipkingsbarber.shop/" },
+        { "@type": "ListItem", "position": 2, "name": "Gallery", "item": "https://clipkingsbarber.shop/gallery.html" }
+      ]
+    }
+    </script>
+    <!-- SEO INJECTION END -->
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+</head>
+<body class="loading" data-barba="wrapper">
+    <noscript>
+        <style>
+            .gs-reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+            .loading { overflow: visible !important; }
+        </style>
+    </noscript>
+
+    <!-- Global Elements -->
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="transition-layer gold"></div>
+    
+    <!-- Premium Barber Transition -->
+    <div class="barber-transition-overlay">
+        <div class="barber-slice slice-left"></div>
+        <div class="barber-slice slice-right"></div>
+        <div class="barber-logo font-display text-gold">CLIP KINGS</div>
+    </div>
+
+    
+    
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center" style="background: var(--color-gold); color: #000; padding: 10px; font-size: 0.85rem; position: relative; z-index: 1000;" role="alert">
+        <p class="font-accent tracking-wide mb-0"><strong>LIMITED SPOTS AVAILABLE</strong> | Elevate your style. <a href="book.html" style="color: #000; text-decoration: underline; font-weight: bold;">Reserve Now</a></p>
+    </div>
+
+    <!-- Consistent Header -->
+    <header id="header" class="site-header" style="background: rgba(5,5,5,0.9);" role="banner">
+        <div class="header-inner container-fluid">
+            <a href="index.html" class="logo font-display text-gold magnetic">CLIP KINGS</a>
+            <nav class="main-nav">
+                <a href="index.html" class="magnetic nav-link">Home</a>
+                <a href="about.html" class="magnetic nav-link">About</a>
+                <a href="services.html" class="magnetic nav-link">Services</a>
+                <a href="happy-hour.html" class="magnetic nav-link">Special Offers</a>
+                <a href="gallery.html" class="magnetic nav-link">Gallery</a>
+                <a href="transformations.html" class="magnetic nav-link">Transformations</a>
+                <a href="reviews.html" class="magnetic nav-link">Reviews</a>
+                <a href="blog.html" class="magnetic nav-link">Blog</a>
+                <a href="contact.html" class="magnetic nav-link">Contact</a>
+                <a href="book.html" class="magnetic nav-link text-gold">Book Now</a>
+            </nav>
+            <div class="header-actions">
+                <button class="menu-toggle magnetic" id="hamburger-btn">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <button class="close-menu magnetic" id="close-menu-btn">×</button>
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav">
+                <a href="index.html" class="mobile-link font-display nav-link">Home</a>
+                <a href="about.html" class="mobile-link font-display nav-link">About</a>
+                <a href="services.html" class="mobile-link font-display nav-link">Services</a>
+                <a href="happy-hour.html" class="mobile-link font-display nav-link">Special Offers</a>
+                <a href="gallery.html" class="mobile-link font-display nav-link">Gallery</a>
+                <a href="transformations.html" class="mobile-link font-display nav-link">Transformations</a>
+                <a href="reviews.html" class="mobile-link font-display nav-link">Reviews</a>
+                <a href="blog.html" class="mobile-link font-display nav-link">Blog</a>
+                <a href="contact.html" class="mobile-link font-display nav-link">Contact</a>
+                <a href="book.html" class="mobile-link font-display nav-link text-gold">Book Now</a>
+            </nav>
+        </div>
+    </div>
+<main data-barba="container" data-barba-namespace="gallery" style="padding-top: 80px;">
+        
+        <!-- SECTION 1: Featured Cinematic Video Hero -->
+        <section style="position: relative; height: 75vh; width: 100%; overflow: hidden; margin-bottom: 60px;">
+            <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5);">
+                <source src="assets/gallery/video1.mp4" type="video/mp4">
+                <img fetchpriority="high" src="assets/images/hero-bg.webp" alt="Gallery Hero Fallback" decoding="async">
+            </video>
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, var(--bg-darker) 0%, transparent 60%);"></div>
+            <div style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(5,5,5,0.9) 0%, transparent 60%);"></div>
+            
+            <div style="position: absolute; bottom: 100px; left: 5vw; max-width: 700px; z-index: 10;" class="gs-reveal">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <span class="pulse-dot" style="width: 8px; height: 8px; background: var(--color-gold); border-radius: 50%; display: inline-block;"></span>
+                    <span class="font-accent text-gold uppercase tracking-wide" style="font-size: 0.9rem; letter-spacing: 2px;">Exclusive Portfolio</span>
+                </div>
+                <h1 class="font-display massive-title title-gradient" style="font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.1; margin-bottom: 20px;">The Visual<br>Experience</h1>
+                <p class="font-body text-muted mb-5" style="font-size: 1.2rem; line-height: 1.6;">Immerse yourself in the art of modern luxury grooming.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Shop Interior Collection -->
+        <section class="gs-reveal">
+            <div class="netflix-row" style="max-width: 1600px; margin: 0 auto 80px;">
+                <h3 class="title-gradient">Inside The Kingdom</h3>
+                <div class="netflix-slider">
+                    <div class="netflix-item"><img loading="lazy" src="assets/gallery/inside1.jpg" alt="Barbershop Interior View" decoding="async"><h4 class="item-title">The Setup</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/inside2.jpg" alt="Barbershop Lounge" loading="lazy" decoding="async"><h4 class="item-title">Lounge</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/inside3.jpg" alt="Premium Barber Chairs" loading="lazy" decoding="async"><h4 class="item-title">Chairs</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/inside4.jpg" alt="Barbershop Lighting Design" loading="lazy" decoding="async"><h4 class="item-title">Lighting</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/inside5.jpg" alt="Barbershop Fine Details" loading="lazy" decoding="async"><h4 class="item-title">Details</h4></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Shop Exterior Collection -->
+        <section class="gs-reveal">
+            <div class="netflix-row" style="max-width: 1600px; margin: 0 auto;">
+                <h3 class="title-gradient">First Impressions Matter</h3>
+                <div class="netflix-slider">
+                    <div class="netflix-item"><img src="assets/gallery/outside1.jpg" alt="Barbershop Storefront" loading="lazy" decoding="async"><h4 class="item-title">Storefront</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/outside2.jpg" alt="Barbershop Entrance" loading="lazy" decoding="async"><h4 class="item-title">Entrance</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/outside3.jpg" alt="Barbershop Signage" loading="lazy" decoding="async"><h4 class="item-title">Signage</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/outside4.jpg" alt="Barbershop Night View" loading="lazy" decoding="async"><h4 class="item-title">Night View</h4></div>
+                    <div class="netflix-item"><img src="assets/gallery/outside5.jpg" alt="Barbershop Street View" loading="lazy" decoding="async"><h4 class="item-title">The Block</h4></div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="row-divider"></div>
+
+        <!-- SECTION 4: THE DIRECTOR'S CUT (Premium 9:16 Auto-playing Video Reels) -->
+        <section class="section-padding bg-darker" style="border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 80px; overflow: hidden;">
+            <div class="container text-center mb-5" style="max-width: 1000px; margin: 0 auto 50px;">
+                <span class="font-accent text-gold uppercase tracking-wide" style="letter-spacing: 3px; font-size: 0.9rem;">Real Cuts. Real Results.</span>
+                <h2 class="font-display title-gradient mt-3" style="font-size: clamp(2.5rem, 4vw, 4rem);">The Director's Cut</h2>
+                <p class="text-muted mt-3" style="font-size: 1.1rem;">Tap any video to immerse yourself with sound.</p>
+            </div>
+            
+            <div class="reel-slider gs-reveal">
+                
+                <!-- Video Reel 1 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video1.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">Fade Execution</span>
+                    </div>
+                </div>
+
+                <!-- Video Reel 2 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video2.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">Beard Sculpting</span>
+                    </div>
+                </div>
+
+                <!-- Video Reel 3 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video3.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">Scissor Work</span>
+                    </div>
+                </div>
+
+                <!-- Video Reel 4 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video4.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">Hot Towel Shave</span>
+                    </div>
+                </div>
+
+                <!-- Video Reel 5 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video5.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">Texture Addition</span>
+                    </div>
+                </div>
+
+                <!-- Video Reel 6 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video6.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">The Line Up</span>
+                    </div>
+                </div>
+
+                <!-- Video Reel 7 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video7.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">Client Reaction</span>
+                    </div>
+                </div>
+
+                <!-- Video Reel 8 -->
+                <div class="reel-card magnetic">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="assets/gallery/video8.mp4" type="video/mp4">
+                    </video>
+                    <div class="reel-overlay"></div>
+                    <div class="play-indicator">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <div class="reel-label">
+                        <div class="reel-label-dot"></div>
+                        <span class="reel-label-text">Final Polish</span>
+                    </div>
+                </div>
+
+                <!-- Stylish Instagram Call To Action Card -->
+                <div class="reel-card ig-cta-card magnetic" onclick="window.open('https://www.instagram.com/clipkingsbarbershop', '_blank')">
+                    <svg class="ig-icon-large" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    <h3 class="font-display text-white mb-2" style="font-size: 1.5rem;">Want More?</h3>
+                    <p class="text-muted text-sm mb-4" style="line-height: 1.5;">Follow the crown on Instagram for daily cuts, shop vibes, and exclusive content.</p>
+                    <span class="btn btn-outline btn-sm w-100" style="padding: 12px;">Follow @ClipKings</span>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Consistent Footer -->
+    <footer class="site-footer bg-darker border-top-muted" style="border-top: 1px solid rgba(255,255,255,0.05); padding: 60px 20px 30px; background: #000;">
+        <div class="container text-center" style="max-width: 1400px; margin: 0 auto;">
+            <h2 class="font-display text-gold mb-4" style="font-size: 2rem;">CLIP KINGS</h2>
+            <nav class="footer-nav mb-5" style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                <a href="contact.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Contact</a>
+                <a href="faq.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">FAQ</a>
+                <a href="privacy.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Privacy</a>
+                <a href="terms.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Terms</a>
+                <a href="sitemap.html" style="color: #888; text-decoration: none; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;">Sitemap</a>
+            </nav>
+            <div class="copyright pt-4" style="border-top: 1px solid rgba(255,255,255,0.05); color: #555; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                <p>© <span id="year">2024</span> Clip Kings Barber Shop. All rights reserved.</p>
+            </div>
+        </div>
+    
+    <div class="social-links-footer" style="display: flex; justify-content: center; gap: 20px; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%;">
+        <a href="https://www.instagram.com/clipkingsbarbershop" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        
+        <a href="https://g.page/r/CegNqH4dRaAQEAE/review" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Google Reviews">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </a>
+        <a href="https://booksy.com/en-ca/dl/show-business/24439?utm_medium=c2c_referral" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Booksy">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </a>
+    </div>
+
+</footer>
+
+    <!-- Video Modal / Lightbox (Hidden by default) -->
+    <div id="video-modal" class="video-modal-overlay">
+        <span class="close-video-modal" id="close-modal">&times;</span>
+        <div class="video-modal-content">
+            <video id="modal-video" controls playsinline preload="none"></video>
+        </div>
+    </div>
+
+    <!-- Exit Intent Popup -->
+    <div class="exit-popup-overlay" id="exit-popup" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="exit-popup-content" style="background: #111; border: 1px solid var(--color-gold); padding: 50px; max-width: 500px; text-align: center; position: relative; border-radius: 4px;">
+            <span class="exit-close" id="exit-close-btn" style="position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #fff; cursor: pointer;">&times;</span>
+            <h3 class="font-display text-gold mb-3" style="font-size: 2rem;">Wait! Don't Miss Your Best Look Yet.</h3>
+            <p class="text-muted mb-4" style="color: #aaa; line-height: 1.5;">First-time clients receive a complimentary hot towel treatment with any fade.</p>
+            <a href="book.html" class="btn btn-primary cta-pulse magnetic" style="padding: 15px 30px; width: 100%; box-sizing: border-box;">Claim Offer & Book</a>
+        </div>
+    </div>
+
+    
+</body>
+</html>
