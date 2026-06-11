@@ -348,17 +348,28 @@ html, body {
     /* CHATBOT WINDOW FIX */
     .chat-window, .chatbot-container, #chat-widget, iframe[id*="chat"] {
         max-height: 80dvh !important;
-        max-width: 90vw !important;
-        bottom: 80px !important; /* Lifts it above the screen bottom */
+        /* Width screen se choti rakhi hai (30px total margin) */
+        width: calc(100vw - 30px) !important; 
+        max-width: 400px !important;
+        bottom: 80px !important; 
         right: 15px !important;
-        z-index: 10010 !important; /* Above everything */
+        
+        /* IMP: Left ko auto kar diya aur transform hata diya jisse bahar na bhage */
+        left: auto !important; 
+        transform: none !important;
+        margin: 0 !important;
+        
+        z-index: 10010 !important; 
         overflow-y: auto !important;
+        overflow-x: hidden !important;
     }
 
     /* CHAT ICON BUTTON FIX */
     .chat-bubble, #chat-button, .chat-icon {
-        bottom: 20px !important; /* Keeps the icon visible */
+        bottom: 20px !important; 
         right: 15px !important;
+        left: auto !important;
+        transform: none !important;
         z-index: 10010 !important;
     }
 }
