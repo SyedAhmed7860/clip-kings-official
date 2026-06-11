@@ -1,0 +1,18 @@
+project/
+├── index.html
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+│   └── images/
+│       ├── hero-bg.jpg
+│       ├── transformation-before.jpg
+│       ├── transformation-after.jpg
+│       ├── gallery-interior.jpg
+│       ├── gallery-tools.jpg
+│       ├── gallery-cutting.jpg
+│       ├── gallery-shave.jpg
+│       ├── team-aj.jpg
+│       ├── team-moe.jpg
+│       └── final-cta-bg.jpg

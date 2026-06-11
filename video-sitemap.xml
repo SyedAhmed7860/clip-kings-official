@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://clipkingsbarber.shop/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://clipkingsbarber.shop/assets/images/hero-bg.jpg</video:thumbnail_loc>
+      <video:title>Clip Kings Master Barber Experience</video:title>
+      <video:description>Experience the ultimate luxury grooming session at Clip Kings Barber Shop.</video:description>
+      <video:content_loc>https://clipkingsbarber.shop/assets/images/hero-bg.mp4</video:content_loc>
+      <video:publication_date>2026-06-04T16:26:14.187Z</video:publication_date>
+    </video:video>
+  </url>
+</urlset>
