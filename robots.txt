@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://clipkingsbarber.shop/sitemap-index.xml
-Host: https://clipkingsbarber.shop
