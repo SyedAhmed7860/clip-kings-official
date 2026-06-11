@@ -1,3 +1,0 @@
-Contact: mailto:security@clipkingsbarber.shop
-Preferred-Languages: en
-Canonical: https://clipkingsbarber.shop/.well-known/security.txt
