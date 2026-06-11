@@ -314,3 +314,33 @@ html, body {
 .booking-popup-overlay.active .booking-popup-content {
     transform: translateY(0) scale(1);
 }
+.booking-popup-overlay.active .booking-popup-content {
+    transform: translateY(0) scale(1);
+}
+
+
+.booking-popup-content,
+#exit-popup > div {
+    max-height: 85dvh;
+    overflow-y: auto;
+    /* Custom scrollbar for a clean look */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gold) transparent;
+}
+
+@media (max-width: 768px) {
+    .booking-popup-content,
+    #exit-popup > div {
+        padding: 30px 20px !important; 
+        width: 92% !important;
+    }
+
+    #exit-close-btn,
+    .close-btn,
+    .popup-close {
+        top: 15px !important;
+        right: 15px !important;
+        position: absolute !important;
+        z-index: 10005 !important;
+    }
+}
