@@ -356,7 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- 2. BULLETPROOF ELEMENT REVEAL (GSAP ScrollTrigger version) ---
-        // Changed back to ScrollTrigger since Barba is removed. It triggers natively and perfectly.
         if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             const revealElements = container.querySelectorAll('.gs-reveal');
             
@@ -370,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ease: "power3.out",
                         scrollTrigger: {
                             trigger: el,
-                            start: "top 95%", // Element slightly in view triggers animation
+                            start: "top 95%", 
                             once: true
                         }
                     }
@@ -685,7 +684,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- FIX: Run initialization immediately instead of waiting for heavy files ---
     function initApp() {
         initialPreloader();
         initPageScripts(document);
@@ -696,7 +694,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize instantly on DOM ready
     initApp();
 
-    // After all heavy assets (videos/images) finish loading, just refresh GSAP calculations
     window.addEventListener('load', () => {
         if (typeof ScrollTrigger !== 'undefined') {
             ScrollTrigger.refresh();
@@ -739,58 +736,68 @@ document.addEventListener('DOMContentLoaded', () => {
     initBookingPopup();
 
     // ==========================================
-    // 7. BARBA.JS PREMIUM PAGE TRANSITIONS
+    // 7. PREMIUM NATIVE GSAP PAGE TRANSITIONS
     // ==========================================
-    if (typeof barba !== 'undefined') {
-        barba.init({
-            sync: true,
-            transitions: [{
-                name: 'luxury-sweep',
-                leave(data) {
-                    const done = this.async();
-                    gsap.to('.transition-layer.gold', {
-                        y: '0%', 
-                        duration: 0.6, 
-                        ease: "power3.inOut",
-                        onComplete: done
-                    });
-                },
-                enter(data) {
-                    window.scrollTo(0, 0);
-                    // Update navigation highlighting
-                    const currentUrl = data.next.url.path;
-                    document.querySelectorAll('.nav-link').forEach(link => {
-                        const linkUrl = new URL(link.href).pathname;
-                        if (currentUrl === linkUrl || currentUrl === linkUrl + '/') {
-                            link.classList.add('active');
-                            link.style.color = 'var(--color-gold)';
-                        } else {
-                            link.classList.remove('active');
-                            link.style.color = '';
-                        }
-                    });
-                    
-                    // Re-init scripts for new container
-                    initPageScripts(data.next.container);
-                    
-                    // Re-init Webflow/GSAP ScrollTriggers
-                    setTimeout(() => {
-                        if (typeof ScrollTrigger !== 'undefined') {
-                            ScrollTrigger.refresh();
-                        }
-                    }, 100);
+    function initNativeTransitions() {
+        const transitionLayer = document.querySelector('.transition-layer.gold');
+        if (!transitionLayer) return;
 
-                    return gsap.to('.transition-layer.gold', {
-                        y: '-100%', 
-                        duration: 0.6, 
-                        ease: "power3.inOut",
-                        onComplete: () => {
-                            gsap.set('.transition-layer.gold', { y: '100%' });
-                        }
-                    });
+        // 1. Enter Animation (runs instantly on new page load)
+        // Ensure layer is covering screen immediately, then sweep up
+        gsap.to(transitionLayer, {
+            y: '-100%', 
+            duration: 0.6, 
+            ease: "power3.inOut",
+            onComplete: () => {
+                gsap.set(transitionLayer, { y: '100%' }); // Reset to bottom for next leave
+            }
+        });
+
+        // 2. Intercept Internal Clicks
+        const links = document.querySelectorAll('a[href]');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                const target = link.getAttribute('target');
+
+                // Bypass for ctrl/cmd clicks, new tabs, anchors, tel/email, and external sites
+                if (
+                    e.ctrlKey || e.metaKey || e.shiftKey || e.altKey ||
+                    !href || 
+                    href.startsWith('#') || 
+                    href.startsWith('mailto:') || 
+                    href.startsWith('tel:') || 
+                    target === '_blank' || 
+                    link.hostname !== window.location.hostname ||
+                    link.hasAttribute('download')
+                ) {
+                    return; // Let browser act normally
                 }
-            }]
+
+                // Internal link logic: prevent instant jump, animate, then redirect
+                e.preventDefault();
+                
+                // Sweep gold layer up from bottom
+                gsap.to(transitionLayer, {
+                    y: '0%', 
+                    duration: 0.6, 
+                    ease: "power3.inOut",
+                    onComplete: () => {
+                        window.location.href = href; // Execute native navigation
+                    }
+                });
+            });
+        });
+
+        // 3. Fix for Safari/Mobile Browser Back/Forward Cache (bfcache)
+        // Ensures the gold overlay is removed if user clicks browser "Back" button
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                gsap.set(transitionLayer, { y: '100%' });
+            }
         });
     }
+
+    initNativeTransitions();
             
 });
