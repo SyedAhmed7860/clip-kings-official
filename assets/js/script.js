@@ -738,9 +738,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 7. PREMIUM NATIVE GSAP PAGE TRANSITIONS
     // ==========================================
+    const ENABLE_PAGE_TRANSITIONS = false; // Feature flag for diagnostic debugging
+
     function initNativeTransitions() {
         const transitionLayer = document.querySelector('.transition-layer.gold');
         if (!transitionLayer) return;
+
+        // Diagnostic bypass: instantly hide the overlay and restore normal navigation
+        if (!ENABLE_PAGE_TRANSITIONS) {
+            gsap.set(transitionLayer, { display: 'none', y: '-100%' });
+            return; 
+        }
 
         // 1. Enter Animation (runs instantly on new page load)
         // Ensure layer is covering screen immediately, then sweep up
