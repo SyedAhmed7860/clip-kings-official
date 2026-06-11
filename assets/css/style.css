@@ -314,11 +314,11 @@ html, body {
 .booking-popup-overlay.active .booking-popup-content {
     transform: translateY(0) scale(1);
 }
-.booking-popup-overlay.active .booking-popup-content {
-    transform: translateY(0) scale(1);
-}
 
 
+/* ==========================================
+   POPUP & CHATBOT RESPONSIVE FIXES FOR MOBILE
+   ========================================== */
 .booking-popup-content,
 #exit-popup > div {
     max-height: 85dvh;
@@ -335,6 +335,7 @@ html, body {
         width: 92% !important;
     }
 
+    /* Ensure close buttons stay inside the screen and are easily clickable */
     #exit-close-btn,
     .close-btn,
     .popup-close {
@@ -342,5 +343,22 @@ html, body {
         right: 15px !important;
         position: absolute !important;
         z-index: 10005 !important;
+    }
+
+    /* CHATBOT WINDOW FIX */
+    .chat-window, .chatbot-container, #chat-widget, iframe[id*="chat"] {
+        max-height: 80dvh !important;
+        max-width: 90vw !important;
+        bottom: 80px !important; /* Lifts it above the screen bottom */
+        right: 15px !important;
+        z-index: 10010 !important; /* Above everything */
+        overflow-y: auto !important;
+    }
+
+    /* CHAT ICON BUTTON FIX */
+    .chat-bubble, #chat-button, .chat-icon {
+        bottom: 20px !important; /* Keeps the icon visible */
+        right: 15px !important;
+        z-index: 10010 !important;
     }
 }
