@@ -5,22 +5,35 @@
 /* HEADER & NAV */
 
 .site-header {
-    /* Removed !important from layout properties so HTML inline styles (like position: fixed) can work */
-    position: absolute; top: 41px; left: 0; width: 100%; padding: 2rem 0; z-index: 999;
-    transition: background-color 0.4s ease, padding 0.4s ease, top 0.4s ease;
+    position: absolute; top: auto; left: 0; width: 100%; padding: clamp(10px, 1.5vw, 15px) 0; z-index: 999;
+    background: rgba(5, 5, 5, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.05);
+    transition: background-color 0.4s ease, padding 0.4s ease, top 0.4s ease, backdrop-filter 0.4s ease;
 }
 .site-header.scrolled {
-    position: fixed !important; top: 0 !important; padding: 1rem 0 !important;
+    position: fixed !important; top: 0 !important; padding: 10px 0 !important;
     background-color: rgba(5, 5, 5, 0.98) !important;
     backdrop-filter: blur(15px) !important; -webkit-backdrop-filter: blur(15px) !important;
     border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
 }
-.header-inner { display: flex; justify-content: space-between; align-items: center; }
-.logo { font-size: 1.8rem; font-weight: 600; letter-spacing: 2px; margin: 0; padding: 0; }
-.main-nav { display: flex; gap: 3rem; align-items: center; margin: 0; padding: 0; }
+.header-inner { display: flex; justify-content: space-between; align-items: center; gap: clamp(1rem, 3vw, 4rem); }
+
+.logo { 
+    font-size: clamp(1.3rem, 1rem + 1vw, 2.2rem); font-weight: 600; letter-spacing: 2px; margin: 0; padding: 0; 
+    white-space: nowrap; max-width: 18%; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;
+}
+
+.main-nav { 
+    display: flex; gap: clamp(1.2rem, 2vw, 3rem); align-items: center; margin: 0; padding: 0; 
+    min-width: 70%; flex-shrink: 0; flex-grow: 1; justify-content: flex-end;
+}
 .main-nav a {
-    font-family: var(--font-accent) !important; font-size: 1rem !important; text-transform: uppercase !important; font-weight: 500 !important;
-    letter-spacing: 2px !important; color: var(--color-text) !important; position: relative !important; padding-bottom: 5px !important; margin: 0 !important; line-height: 1 !important;
+    font-family: var(--font-accent) !important; 
+    font-size: clamp(0.95rem, 0.65rem + 0.5vw, 1.3rem) !important; 
+    text-transform: uppercase !important; 
+    font-weight: 500 !important;
+    letter-spacing: clamp(1.5px, 0.1vw + 1px, 2px) !important; 
+    color: var(--color-text) !important; position: relative !important; padding-bottom: 5px !important; margin: 0 !important; line-height: 1 !important;
 }
 .main-nav a::after {
     content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
