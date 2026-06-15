@@ -7,7 +7,6 @@
     
     
     
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -45,32 +44,6 @@
         }
         .section-padding { padding: 100px 5vw; }
         
-        /* Navigation Upgrades */
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.15rem; /* Increased size for laptop */
-            letter-spacing: 1.5px;
-            font-weight: 500;
-            padding: 8px 12px;
-            transition: all 0.3s;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--color-gold);
-            text-shadow: 0 0 10px rgba(212,175,55,0.3);
-        }
-        
-        /* Desktop vs Mobile Nav */
-        @media (min-width: 992px) {
-            .main-nav { display: flex !important; gap: 20px; align-items: center; }
-            .menu-toggle { display: none !important; }
-        }
-        @media (max-width: 991px) {
-            .main-nav { display: none !important; }
-            .menu-toggle { display: flex; align-items: center; justify-content: center; background: transparent; border: none; cursor: pointer; color: var(--color-gold); }
-        }
 
         /* Buttons Setup */
         .btn {
@@ -265,7 +238,6 @@
         }
     </style>
 
-    <!-- SEO INJECTION START -->
     <title>700+ 5-Star Reviews | Clip Kings Barber Shop Testimonials</title>
     <meta name="description" content="Read over 700 verified 5-star reviews from our happy clients. Discover why gentlemen across Thornhill trust Clip Kings with their style.">
     <link rel="canonical" href="https://clipkingsbarber.shop/reviews.html">
@@ -305,7 +277,6 @@
       ]
     }
     </script>
-    <!-- SEO INJECTION END -->
 
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -339,10 +310,10 @@
         <p class="font-accent tracking-wide mb-0"><strong>LIMITED SPOTS AVAILABLE</strong> | Elevate your style. <a href="book.html" style="color: #000; text-decoration: underline; font-weight: bold;">Reserve Now</a></p>
     </div>
 
-    <!-- Consistent Header -->
-    <header id="header" class="site-header" style="background: rgba(5,5,5,0.9); position: fixed; width: 100%; z-index: 100;" role="banner">
-        <div class="header-inner container-fluid" style="display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 20px 5vw;">
-            <a href="index.html" class="logo font-display text-gold magnetic" style="font-size: 1.5rem; text-decoration: none; font-weight: bold;">CLIP KINGS</a>
+    <!-- Consistent Sleek Header like other pages -->
+    <header id="header" class="site-header" style="background: rgba(5,5,5,0.9);" role="banner">
+        <div class="header-inner container-fluid">
+            <a href="index.html" class="logo font-display text-gold magnetic">CLIP KINGS</a>
             <nav class="main-nav">
                 <a href="index.html" class="magnetic nav-link">Home</a>
                 <a href="about.html" class="magnetic nav-link">About</a>
@@ -350,41 +321,43 @@
                 <a href="happy-hour.html" class="magnetic nav-link">Special Offers</a>
                 <a href="gallery.html" class="magnetic nav-link">Gallery</a>
                 <a href="transformations.html" class="magnetic nav-link">Transformations</a>
-                <a href="reviews.html" class="magnetic nav-link active" style="color: var(--color-gold);">Reviews</a>
+                <a href="reviews.html" class="magnetic nav-link">Reviews</a>
                 <a href="blog.html" class="magnetic nav-link">Blog</a>
                 <a href="contact.html" class="magnetic nav-link">Contact</a>
                 <a href="book.html" class="magnetic nav-link text-gold">Book Now</a>
             </nav>
             <div class="header-actions">
                 <button class="menu-toggle magnetic" id="hamburger-btn">
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay" id="mobile-menu" style="display: none; position: fixed; inset: 0; background: rgba(5,5,5,0.98); z-index: 200; align-items: center; justify-content: center; flex-direction: column;">
-        <button class="close-menu magnetic" id="close-menu-btn" style="position: absolute; top: 30px; right: 30px; background: none; border: none; color: #fff; font-size: 3rem; cursor: pointer; z-index: 201;">×</button>
-        <div class="mobile-menu-inner text-center">
-            <nav class="mobile-nav" style="display: flex; flex-direction: column; gap: 30px; padding: 20px;">
-                <a href="index.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">Home</a>
-                <a href="about.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">About</a>
-                <a href="services.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">Services</a>
-                <a href="happy-hour.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">Special Offers</a>
-                <a href="gallery.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">Gallery</a>
-                <a href="transformations.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">Transformations</a>
-                <a href="reviews.html" class="mobile-link font-display text-gold" style="font-size: 2.2rem; text-decoration: none;">Reviews</a>
-                <a href="contact.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">Contact</a>
-                <a href="book.html" class="mobile-link font-display text-white" style="font-size: 2.2rem; text-decoration: none;">Book Now</a>
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <button class="close-menu magnetic" id="close-menu-btn">×</button>
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav">
+                <a href="index.html" class="mobile-link font-display nav-link">Home</a>
+                <a href="about.html" class="mobile-link font-display nav-link">About</a>
+                <a href="services.html" class="mobile-link font-display nav-link">Services</a>
+                <a href="happy-hour.html" class="mobile-link font-display nav-link">Special Offers</a>
+                <a href="gallery.html" class="mobile-link font-display nav-link">Gallery</a>
+                <a href="transformations.html" class="mobile-link font-display nav-link">Transformations</a>
+                <a href="reviews.html" class="mobile-link font-display nav-link">Reviews</a>
+                <a href="blog.html" class="mobile-link font-display nav-link">Blog</a>
+                <a href="contact.html" class="mobile-link font-display nav-link">Contact</a>
+                <a href="book.html" class="mobile-link font-display nav-link text-gold">Book Now</a>
             </nav>
         </div>
     </div>
     
-    <main data-barba="container" data-barba-namespace="reviews" style="padding-top: 100px;">
+    <!-- FIX: Properly spaced main tag to prevent header overlap -->
+    <main data-barba="container" data-barba-namespace="reviews" style="padding-top: 120px;">
         
         <!-- Page Header -->
-        <header class="page-header" style="padding: 80px 5vw 40px; text-align: center; position: relative;">
+        <header class="page-header" style="padding: 40px 5vw 40px; text-align: center; position: relative;">
             <div class="container gs-reveal" style="max-width: 900px; margin: 0 auto;">
                 <span class="font-accent text-gold uppercase tracking-wide" style="letter-spacing: 3px; font-size: 0.9rem;">Reputation</span>
                 <h1 class="font-display massive-title title-gradient mt-3" style="font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 20px;">Trusted By Hundreds<br>Of Happy Clients</h1>
@@ -599,20 +572,19 @@
             </div>
         </div>
     
-    <div class="social-links-footer" style="display: flex; justify-content: center; gap: 20px; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%;">
-        <a href="https://www.instagram.com/clipkingsbarbershop" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Instagram">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-        </a>
-        
-        <a href="https://g.page/r/CegNqH4dRaAQEAE/review" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Google Reviews">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        </a>
-        <a href="https://booksy.com/en-ca/dl/show-business/24439?utm_medium=c2c_referral" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Booksy">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        </a>
-    </div>
-
-</footer>
+        <div class="social-links-footer" style="display: flex; justify-content: center; gap: 20px; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%;">
+            <a href="https://www.instagram.com/clipkingsbarbershop" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            
+            <a href="https://g.page/r/CegNqH4dRaAQEAE/review" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Google Reviews">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </a>
+            <a href="https://booksy.com/en-ca/dl/show-business/24439?utm_medium=c2c_referral" target="_blank" rel="noopener noreferrer" class="text-muted hover-gold" aria-label="Booksy">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </a>
+        </div>
+    </footer>
 
     <!-- Exit Intent Popup -->
     <div class="exit-popup-overlay" id="exit-popup" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center;">
@@ -623,7 +595,6 @@
             <a href="book.html" class="btn btn-primary cta-pulse magnetic" style="padding: 15px 30px; width: 100%; box-sizing: border-box;">Claim Offer & Book</a>
         </div>
     </div>
-    
     
 </body>
 </html>
