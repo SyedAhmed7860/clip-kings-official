@@ -1,5 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    // --- DYNAMIC HEADER HEIGHT CALCULATION ---
+    function updateHeaderHeight() {
+        const header = document.querySelector('.site-header');
+        const annBar = document.querySelector('.announcement-bar');
+        let hHeight = header ? header.offsetHeight : 0;
+        let aHeight = annBar ? annBar.offsetHeight : 0;
+        document.documentElement.style.setProperty('--header-height', hHeight + 'px');
+        document.documentElement.style.setProperty('--announcement-height', aHeight + 'px');
+        document.documentElement.style.setProperty('--total-header-height', (hHeight + aHeight) + 'px');
+    }
+    window.addEventListener('resize', updateHeaderHeight);
+    updateHeaderHeight();
+
     // ==========================================
     // 0. THREE.JS GLOBAL BACKGROUND
     // ==========================================
@@ -249,12 +262,21 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // --- 1. FOOLPROOF NAV LINK HIGHLIGHTING ---
         const navLinks = document.querySelectorAll('.nav-link');
-        const currentUrl = window.location.href.split('#')[0].split('?')[0]; 
+        const currentPath = window.location.pathname.replace(/\/$/, "");
         
         navLinks.forEach(link => {
-            const linkUrl = link.href.split('#')[0].split('?')[0];
+            const linkPath = new URL(link.href).pathname.replace(/\/$/, "");
             
-            if (currentUrl === linkUrl) {
+            let isMatch = false;
+            if (linkPath === '/' || linkPath.endsWith('index.html')) {
+                isMatch = (currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '');
+            } else {
+                const linkBase = linkPath.split('.html')[0];
+                const currentBase = currentPath.split('.html')[0];
+                isMatch = (currentBase === linkBase || currentBase.startsWith(linkBase + '-'));
+            }
+            
+            if (isMatch) {
                 link.classList.add('active');
                 link.style.color = 'var(--color-gold)';
             } else {
