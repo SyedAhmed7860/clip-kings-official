@@ -22,13 +22,20 @@
     
     <style>
         .hh-hero {
-            height: 60vh;
+            min-height: 60vh;
+            padding-top: var(--total-header-height, 120px); /* Dynamically generated offset to prevent header collision */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             background: radial-gradient(circle at center, #111, #050505);
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .hh-heading {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 15px;
         }
         .deal-grid {
             display: grid;
@@ -202,7 +209,7 @@
         
         <section class="hh-hero" style="background: radial-gradient(circle at center, #111, #050505);">
             <div class="container gs-reveal">
-                <h1 class="font-display massive-title title-gradient">Exclusive Offers</h1>
+                <h1 class="title-gradient hh-heading">Exclusive Offers</h1>
                 <p class="text-muted text-xl mt-4 max-w-600 mx-auto">Premium grooming experiences at exceptional value.</p>
                 <div style="background: rgba(212,175,55,0.1); border: 1px solid var(--color-gold); border-radius: 8px; padding: 15px 20px; margin-top: 30px; display: inline-block;">
                     <p class="font-accent text-gold uppercase tracking-wide mb-1" style="font-size: 0.9rem; letter-spacing: 2px;">Happy Hour Schedule</p>
