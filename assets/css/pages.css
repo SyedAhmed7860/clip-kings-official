@@ -20,7 +20,15 @@
 
 .logo { 
     font-size: clamp(1.3rem, 1rem + 1vw, 2.2rem); font-weight: 600; letter-spacing: 2px; margin: 0; padding: 0; 
-    white-space: nowrap; max-width: 18%; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; flex-shrink: 1; 
+}
+
+@media (min-width: 992px) {
+    .logo {
+        max-width: 18%; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }
 }
 
 .main-nav { 
