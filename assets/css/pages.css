@@ -1,40 +1,48 @@
-/* ==========================================
+==========================================
    PAGES & SECTION STYLES
    ========================================== */
 
 /* HEADER & NAV */
 
 .site-header {
-    position: absolute; top: auto; left: 0; width: 100%; padding: clamp(10px, 1.5vw, 15px) 0; z-index: 999;
+    position: absolute; top: auto; left: 0; width: 100%; padding: clamp(15px, 2vw, 25px) 0; z-index: 999;
     background: rgba(5, 5, 5, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(212, 175, 55, 0.05);
     transition: background-color 0.4s ease, padding 0.4s ease, top 0.4s ease, backdrop-filter 0.4s ease;
 }
 .site-header.scrolled {
-    position: fixed !important; top: 0 !important; padding: 10px 0 !important;
+    position: fixed !important; top: 0 !important; padding: clamp(12px, 1.5vw, 18px) 0 !important;
     background-color: rgba(5, 5, 5, 0.98) !important;
     backdrop-filter: blur(15px) !important; -webkit-backdrop-filter: blur(15px) !important;
     border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
 }
-.header-inner { display: flex; justify-content: space-between; align-items: center; gap: clamp(0.5rem, -1rem + 2.5vw, 4rem); }
+.header-inner { 
+    display: flex; justify-content: space-between; align-items: center; 
+    gap: clamp(1.5rem, 4vw, 5rem); 
+    max-width: 1728px; 
+    margin: 0 auto; 
+    padding: 0 clamp(20px, 4vw, 60px);
+}
 
+/* STREAMING_CHUNK: Defining typography for logo and navigation... */
 .logo { 
-    font-size: clamp(1rem, -0.5rem + 1.8vw, 2.2rem); font-weight: 600; letter-spacing: 2px; margin: 0; padding: 0; 
+    font-size: clamp(1.3rem, 2vw, 2.2rem); font-weight: 600; letter-spacing: 3px; margin: 0; padding: 0; 
     white-space: nowrap; flex-shrink: 0; 
 }
 
 .main-nav { 
-    display: flex; gap: clamp(0.5rem, -1.5rem + 2.5vw, 3rem); align-items: center; margin: 0; padding: 0; 
+    display: flex; gap: clamp(1rem, 1.8vw, 2.5rem); align-items: center; margin: 0; padding: 0; 
     min-width: auto; flex-shrink: 1; flex-grow: 1; justify-content: flex-end;
 }
 .main-nav a {
     font-family: var(--font-accent) !important; 
-    font-size: clamp(0.7rem, -0.3rem + 1.1vw, 1.25rem) !important; 
+    font-size: clamp(0.85rem, 0.9vw, 1.05rem) !important; 
     text-transform: uppercase !important; 
     font-weight: 500 !important;
-    letter-spacing: clamp(0.5px, -1px + 0.2vw, 2px) !important; 
-    color: var(--color-text) !important; position: relative !important; padding-bottom: 5px !important; margin: 0 !important; line-height: 1 !important;
+    letter-spacing: clamp(1.5px, 0.1vw + 1px, 2.5px) !important; 
+    color: var(--color-text) !important; position: relative !important; padding-bottom: 6px !important; margin: 0 !important; line-height: 1 !important;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 .main-nav a::after {
     content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
@@ -44,6 +52,8 @@
 .main-nav a:hover, .main-nav a.active { color: var(--color-white); }
 .header-actions { display: flex; align-items: center; gap: 2rem; }
 .header-phone { font-family: var(--font-accent); letter-spacing: 1px; }
+
+/* STREAMING_CHUNK: Configuring mobile menu overlay and actions... */
 .menu-toggle { display: none; flex-direction: column; gap: 6px; background: none; border: none; z-index: 1001; }
 .menu-toggle .line { width: 30px; height: 1px; background-color: var(--color-gold); transition: var(--transition-fast); }
 
@@ -74,6 +84,8 @@
     pointer-events: all !important; 
     transform: translate3d(0, 0, 0) !important; 
 }
+
+/* STREAMING_CHUNK: Styling hero section and mobile links... */
 .close-menu { 
     position: absolute !important; top: 1.5rem !important; right: 5vw !important; 
     background: none; border: none; color: var(--color-gold); 
@@ -92,6 +104,8 @@
 .massive-title { font-size: clamp(4rem, 10vw, 8rem); line-height: 1; margin-bottom: 0.5rem; color: #fff; text-shadow: 0 10px 40px rgba(0,0,0,0.8); }
 .title-gradient { background: linear-gradient(to right, #ffffff, #aaaaaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .hero-separator { width: 80px; height: 2px; background-color: var(--color-gold); margin: 2rem 0; }
+
+/* STREAMING_CHUNK: Adding hero content and scroll indicators... */
 .sub-title { font-size: clamp(1.2rem, 2vw, 1.8rem); margin-bottom: 1.5rem; }
 .hero-description { font-size: clamp(1rem, 1.5vw, 1.25rem); max-width: 600px; margin-bottom: 3rem; }
 .hero-cta-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
@@ -108,6 +122,8 @@
 /* TRUST SECTION */
 .trust-section { border-bottom: 1px solid var(--color-border); padding: 4rem 0; }
 .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 2rem; }
+
+/* STREAMING_CHUNK: Styling services menu and transformations slider... */
 .trust-stat { border-right: 1px solid var(--color-border); }
 .trust-stat:last-child { border-right: none; }
 .trust-stat h3 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1; margin-bottom: 0.5rem; }
@@ -126,6 +142,7 @@
 .price-old { text-decoration: line-through; color: var(--color-text-muted); font-size: 1rem; margin-right: 10px; }
 .discount-badge { position: absolute; top: -10px; right: -10px; background: var(--color-gold); color: #000; font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
 
+/* STREAMING_CHUNK: Configuring team section and image wrappers... */
 /* TRANSFORMATIONS SLIDER */
 .ba-wrapper { max-width: 900px; margin: 0 auto; position: relative; border: 1px solid var(--color-border-gold); padding: 10px; background-color: var(--color-surface); }
 .ba-container { position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; }
@@ -140,6 +157,8 @@
 .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4vw; max-width: 1000px; margin: 4rem auto 0; }
 .team-image-wrapper { position: relative; aspect-ratio: 3/4; border: 1px solid var(--color-border); overflow: hidden; }
 .team-img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition-smooth); filter: grayscale(30%); }
+
+/* STREAMING_CHUNK: Designing reviews and video testimonials... */
 .team-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); }
 .team-card:hover .team-img { transform: scale(1.05); filter: grayscale(0%); }
 .team-card:hover .team-overlay { opacity: 1; transform: translateY(0); }
@@ -156,6 +175,7 @@
 .gr-stars { color: #FBBC04; font-size: 1.1rem; display: flex; align-items: center; gap: 6px; }
 .gr-text { font-family: var(--font-body); color: var(--color-text-muted); font-size: 0.95rem; font-style: italic; line-height: 1.7; }
 
+/* STREAMING_CHUNK: Styling location map and contact form... */
 /* Video Placeholder */
 .video-testimonial { position: relative; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); cursor: pointer; }
 .video-testimonial img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); transition: filter 0.3s; }
@@ -172,6 +192,8 @@
 .hours-row:last-child { border-bottom: none; }
 .location-map { height: 100%; min-height: 500px; position: relative; border-left: 1px solid var(--color-border); }
 .location-map iframe { width: 100%; height: 100%; filter: grayscale(100%) invert(90%) contrast(85%); transition: var(--transition-smooth); }
+
+/* STREAMING_CHUNK: Finishing up form, footer, and exit intent popup... */
 .location-map:hover iframe { filter: grayscale(30%) invert(90%) contrast(90%); }
 .map-overlay { position: absolute; inset: 0; pointer-events: none; background: rgba(5,5,5,0.2); transition: opacity 0.3s; }
 .location-map:hover .map-overlay { opacity: 0; }
