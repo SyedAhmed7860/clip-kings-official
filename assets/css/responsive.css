@@ -16,7 +16,8 @@
     transition: opacity 0.3s ease;
 }
 
-@media (max-width: 1024px) {
+/* Increased from 1100px to 1200px to protect the new luxury navigation spacing */
+@media (max-width: 1200px) {
     .main-nav, .header-actions .btn { display: none; }
     .menu-toggle { display: flex; }
     
@@ -33,6 +34,10 @@
 }
 
 @media (max-width: 768px) {
+    /* Header framing overrides for small screens */
+    .header-inner { padding: 0 5vw; }
+    .logo { font-size: 1.4rem; }
+    
     .announcement-bar { padding: 8px 10px; font-size: 0.8rem; }
     /* .site-header top offset removed */ /* Adjust header drop based on mobile announcement bar height */
     
