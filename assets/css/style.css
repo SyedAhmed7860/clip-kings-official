@@ -17,6 +17,8 @@ html, body {
 overflow-x: hidden;
 width: 100%;
 position: relative;
+padding-left: env(safe-area-inset-left);
+padding-right: env(safe-area-inset-right);
 }
 
 /* HEADER FIX REMOVED - Using native pages.css transitions */
@@ -371,7 +373,7 @@ width: 92% !important;
 .chat-window, .chatbot-container, #chat-widget, iframe[id*="chat"] {
     max-height: 80dvh !important;
     /* Width screen se choti rakhi hai (30px total margin) */
-    width: calc(100vw - 30px) !important; 
+    width: calc(100% - 30px) !important;
     max-width: 400px !important;
     bottom: 80px !important; 
     right: 15px !important;
@@ -381,7 +383,7 @@ width: 92% !important;
     transform: none !important;
     margin: 0 !important;
     
-    z-index: 10010 !important; 
+    z-index: 9950 !important; 
     overflow-y: auto !important;
     overflow-x: hidden !important;
 }
@@ -392,7 +394,7 @@ width: 92% !important;
     right: 15px !important;
     left: auto !important;
     transform: none !important;
-    z-index: 10010 !important;
+    z-index: 9950 !important;
 }
 
 
