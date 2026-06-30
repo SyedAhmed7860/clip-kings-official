@@ -6,7 +6,7 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 9999;
+    z-index: 9900;
     font-family: var(--font-body);
 }
 
@@ -39,7 +39,7 @@
     right: 0;
     width: 350px;
     height: 500px;
-    max-height: 80vh;
+    max-height: 80dvh;
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -240,7 +240,7 @@
         left: 15px;
         right: 15px;
         bottom: 85px;
-        max-height: 50vh;
+        max-height: 50dvh;
     }
     .chatbot-bubble {
         width: 50px;
