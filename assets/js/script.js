@@ -10,7 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.style.setProperty('--announcement-height', aHeight + 'px');
         document.documentElement.style.setProperty('--total-header-height', (hHeight + aHeight) + 'px');
     }
-    window.addEventListener('resize', updateHeaderHeight);
+    
+    let headerResizeTimer;
+    let lastHeaderWidth = window.innerWidth;
+    window.addEventListener('resize', () => {
+        clearTimeout(headerResizeTimer);
+        headerResizeTimer = setTimeout(() => {
+            if (window.innerWidth !== lastHeaderWidth) {
+                updateHeaderHeight();
+                lastHeaderWidth = window.innerWidth;
+            }
+        }, 200);
+    });
     updateHeaderHeight();
 
     // ==========================================
@@ -82,10 +93,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         animate();
 
+        let threeResizeTimer;
+        let lastThreeWidth = window.innerWidth;
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            clearTimeout(threeResizeTimer);
+            threeResizeTimer = setTimeout(() => {
+                if (window.innerWidth !== lastThreeWidth) {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    lastThreeWidth = window.innerWidth;
+                }
+            }, 200);
         });
     }
 
@@ -117,9 +136,18 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
         
-        if (typeof ResizeObserver !== 'undefined') {
-            new ResizeObserver(() => ScrollTrigger.refresh()).observe(document.body);
-        }
+        // Removed Dangerous ResizeObserver. Using Debounced window resize instead.
+        let scrollTriggerResizeTimer;
+        let lastScrollTriggerWidth = window.innerWidth;
+        window.addEventListener('resize', () => {
+            clearTimeout(scrollTriggerResizeTimer);
+            scrollTriggerResizeTimer = setTimeout(() => {
+                if (window.innerWidth !== lastScrollTriggerWidth) {
+                    ScrollTrigger.refresh();
+                    lastScrollTriggerWidth = window.innerWidth;
+                }
+            }, 250);
+        });
     }
 
     // ==========================================
