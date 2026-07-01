@@ -281,7 +281,7 @@ class DecisionTreeAssistant {
             @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
             @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
             @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
-            @media (max-width: 480px) { .chatbot-container { width: calc(100vw - 40px); right: 20px; bottom: 90px; } }
+            @media (max-width: 480px) { .chatbot-container { position: fixed; width: calc(100vw - 30px); right: 15px; bottom: 90px; } }
         `;
         document.head.appendChild(style);
 
