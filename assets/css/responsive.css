@@ -1,4 +1,3 @@
-```css:responsive.css
 /* ==========================================
    RESPONSIVE DESIGN & MOBILE
    ========================================== */
@@ -75,8 +74,22 @@
         -webkit-hyphens: auto;
         max-width: 100%;
         line-height: 1.1;
-        /* Replaced aggressive vw sizing with a safer clamp for the specific component */
-        font-size: clamp(2rem, 8vw, 3.5rem);
+        /* Replaced aggressive vw sizing with a safer clamp for the specific component. 
+           Further reduced max size to ensure "TRANSFORMATION" fits without clipping on narrow screens. */
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+    
+    /* Targeted fix: Prevent "AN ENVIRONMENT OF EXCELLENCE" clipping in section headers */
+    .section-header .section-title,
+    .text-center .section-title {
+        white-space: normal !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        max-width: 100%;
+        /* Adjusted clamp to ensure long words like "ENVIRONMENT" and "EXCELLENCE" fit */
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
     }
 
 /* STREAMING_CHUNK:Applying base structural rules and preventing padding inflations... */
@@ -130,16 +143,26 @@
     .page-header { padding: 120px 0 40px; }
     .logo { font-size: 1.2rem; }
     .header-inner { padding: 0 4vw; gap: 1rem; box-sizing: border-box; }
+    
+    /* Additional safeguard for extremely small screens */
+    .hero-content .massive-title,
+    .hero-content h1,
+    .section-header .section-title,
+    .text-center .section-title {
+        word-break: break-word;
+    }
 }
 
 @media (max-width: 375px) {
     /* Targeted scale down for the hero title to prevent clipping on 375px screens */
     .hero-content .massive-title,
     .hero-content h1 {
-        font-size: 2.2rem !important; 
+        font-size: 2rem !important; 
+    }
+    .section-header .section-title,
+    .text-center .section-title {
+         font-size: 1.7rem !important;
     }
     .btn { padding: 1rem 1.5rem; font-size: 0.9rem; }
 }
 ```eof
-
-```
