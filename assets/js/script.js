@@ -865,4 +865,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initNativeTransitions();
             
 });
-```eof
