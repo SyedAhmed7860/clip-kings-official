@@ -73,7 +73,7 @@
         hyphens: auto;
         -webkit-hyphens: auto;
         max-width: 100%;
-        line-height: 1.1;
+        line-height: 0.85;
         /* Replaced aggressive vw sizing with a safer clamp for the specific component. 
            Further reduced max size to ensure "TRANSFORMATION" fits without clipping on narrow screens. */
         font-size: clamp(2rem, 8vw, 3rem);
@@ -165,4 +165,3 @@
     }
     .btn { padding: 1rem 1.5rem; font-size: 0.9rem; }
 }
-```eof
