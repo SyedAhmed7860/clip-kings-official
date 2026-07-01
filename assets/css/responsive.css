@@ -1,13 +1,17 @@
+```css:responsive.css
 /* ==========================================
    RESPONSIVE DESIGN & MOBILE
    ========================================== */
 
+/* STREAMING_CHUNK:Configuring mobile floating CTA container... */
 .mobile-floating-cta { 
     display: none; 
     position: fixed; 
     bottom: 0; 
     left: 0; 
-    width: 100%; 
+    width: 100%;
+    /* Mathematical Fix: Prevent width blowout when combining 100% with padding */
+    box-sizing: border-box; 
     background: rgba(5,5,5,0.95); 
     backdrop-filter: blur(10px); 
     padding: 1rem 5vw calc(1rem + env(safe-area-inset-bottom, 0)); 
@@ -16,84 +20,71 @@
     transition: opacity 0.3s ease;
 }
 
+/* STREAMING_CHUNK:Adjusting structural layout and grids for screens below 1200px... */
 /* Increased from 1100px to 1200px to protect the new luxury navigation spacing */
 @media (max-width: 1200px) {
     .main-nav, .header-actions .btn { display: none; }
     .menu-toggle { display: flex; }
     
     .trust-grid { grid-template-columns: 1fr 1fr; border-bottom: none; }
-    .trust-stat { border-bottom: 1px solid var(--color-border); padding: 2rem 0; }
+    .trust-stat { border-bottom: 1px solid var(--color-border); padding: 2rem 0; box-sizing: border-box; }
     .trust-stat:nth-child(even) { border-right: none; }
     
     .menu-grid, .location-split { grid-template-columns: 1fr; }
-    .location-content { padding-right: 0; padding-bottom: 3rem; }
-    .location-map { border-left: none; border-top: 1px solid var(--color-border); }
+    .location-content { padding-right: 0; padding-bottom: 3rem; box-sizing: border-box; }
+    .location-map { border-left: none; border-top: 1px solid var(--color-border); box-sizing: border-box; }
     
     body { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0)); } 
     .mobile-floating-cta { display: block; }
     
-    /* Safely restrict width calculation for mobile layout inflation */
-    html, body {
-        max-width: 100vw;
-        overflow-x: hidden;
-    }
-    
+    /* Mathematical Fix: Removed 100vw hacks and overflow-x: hidden masks. 
+       Safely restrict layout via max-width and box-sizing to fix sections 
+       (like "THE EXECUTION") from extending outside the viewport. */
     main, section {
-        width: 100vw;
-        max-width: 100vw;
-        overflow-x: hidden;
+        max-width: 100%;
         box-sizing: border-box;
     }
 }
 
+/* STREAMING_CHUNK:Defining precise mobile framing and targeted clipping fixes... */
 @media (max-width: 768px) {
     /* Header framing overrides for small screens */
-    .header-inner { padding: 0 5vw; }
+    .header-inner { padding: 0 5vw; box-sizing: border-box; }
     .logo { font-size: 1.4rem; }
     
-    .announcement-bar { padding: 8px 10px; font-size: 0.8rem; }
-    /* .site-header top offset removed */ /* Adjust header drop based on mobile announcement bar height */
+    .announcement-bar { padding: 8px 10px; font-size: 0.8rem; box-sizing: border-box; }
     
-    .hero-content { text-align: center; margin-top: 0; }
+    .hero-content { text-align: center; margin-top: 0; max-width: 100%; box-sizing: border-box; }
     .hero-cta-group { justify-content: center; }
     .hero-separator { margin: 2rem auto; }
     
     .team-grid { grid-template-columns: 1fr; }
     
-    .page-header { padding: 140px 0 60px; }
-    .section-title { font-size: 2.5rem; }
+    .page-header { padding: 140px 0 60px; box-sizing: border-box; }
     
-    .exit-popup-content { padding: 2rem; margin: 1rem; }
+    .exit-popup-content { padding: 2rem; margin: 1rem; box-sizing: border-box; max-width: calc(100% - 2rem); }
 
-    /* Mobile Text Clipping and Layout Fixes */
-    /* Mobile Text Clipping and Layout Fixes */
-    .massive-title {
-        font-size: clamp(2rem, 10vw, 3.5rem);
-        white-space: normal;
-        word-break: break-word;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-        line-height: 1.1;
-    }
-    h1, h2, h3, .h1, .h2, .h3, .section-title {
+    /* Targeted fix: Prevent "THE ART OF TRANSFORMATION" clipping inside the hero 
+       without globally overriding .massive-title or standard headers */
+    .hero-content .massive-title,
+    .hero-content h1 {
+        white-space: normal !important;
         word-wrap: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
         -webkit-hyphens: auto;
-        white-space: normal;
         max-width: 100%;
+        line-height: 1.1;
+        /* Replaced aggressive vw sizing with a safer clamp for the specific component */
+        font-size: clamp(2rem, 8vw, 3.5rem);
     }
-    
+
+/* STREAMING_CHUNK:Applying base structural rules and preventing padding inflations... */
     /* Base Structural Responsive Fixes */
     img, video, canvas {
         max-width: 100%;
         height: auto;
     }
-
-    h1, .h1 { font-size: clamp(2rem, 8vw, 3.5rem); }
-    h2, .h2 { font-size: clamp(1.8rem, 7vw, 3rem); }
-    h3, .h3 { font-size: clamp(1.5rem, 6vw, 2.5rem); }
-
 
     .instagram-handle {
         font-size: clamp(1.2rem, 5vw, 2.5rem) !important;
@@ -101,6 +92,8 @@
 
     .section-padding {
         padding: 60px 5vw !important;
+        /* Mathematical Fix: Prevent sections from ballooning horizontally */
+        box-sizing: border-box !important; 
     }
 
     .ambient-glow, .noise-overlay, .barber-transition-overlay {
@@ -114,7 +107,9 @@
     
     .horizontal-scroll-item {
         width: 85vw !important;
+        max-width: 100%;
         height: 50vh !important;
+        box-sizing: border-box;
     }
     
     .btn {
@@ -123,21 +118,28 @@
     }
 }
 
+/* STREAMING_CHUNK:Finalizing micro-breakpoints for extremely small screens... */
 /* Micro Breakpoints for extreme edge cases (iPhone SE, older Androids) */
 @media (max-width: 480px) {
-    .section-padding { padding: 40px 4vw !important; }
+    .section-padding { padding: 40px 4vw !important; box-sizing: border-box !important; }
     .hero-cta-group { flex-direction: column; width: 100%; gap: 10px; }
-    .hero-cta-group .btn { width: 100%; }
+    .hero-cta-group .btn { width: 100%; box-sizing: border-box; }
     .trust-grid { grid-template-columns: 1fr; }
-    .trust-stat { border-right: none !important; border-bottom: 1px solid var(--color-border); padding: 1.5rem 0; }
+    .trust-stat { border-right: none !important; border-bottom: 1px solid var(--color-border); padding: 1.5rem 0; box-sizing: border-box; }
     .trust-stat:last-child { border-bottom: none; }
     .page-header { padding: 120px 0 40px; }
     .logo { font-size: 1.2rem; }
-    .header-inner { padding: 0 4vw; gap: 1rem; }
+    .header-inner { padding: 0 4vw; gap: 1rem; box-sizing: border-box; }
 }
 
 @media (max-width: 375px) {
-    .section-title { font-size: 2rem !important; }
-    .massive-title { font-size: 2.2rem !important; }
+    /* Targeted scale down for the hero title to prevent clipping on 375px screens */
+    .hero-content .massive-title,
+    .hero-content h1 {
+        font-size: 2.2rem !important; 
+    }
     .btn { padding: 1rem 1.5rem; font-size: 0.9rem; }
 }
+```eof
+
+```
