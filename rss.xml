@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>Clip Kings Barber Shop Updates</title>
-  <link>https://clipkingsbarber.shop</link>
-  <description>Latest news, grooming tips, and updates from Clip Kings Barber Shop.</description>
+  <title>Clip Kings Barber Shop Blog</title>
+  <link>https://clipkingsbarber.shop/blog.html</link>
+  <description>Grooming tips, hairstyle trends, and barbershop insights from Clip Kings Barber Shop in Thornhill, Ontario.</description>
+  <language>en-ca</language>
+  <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+  <atom:link href="https://clipkingsbarber.shop/rss.xml" rel="self" type="application/rss+xml" />
   <item>
-    <title>Welcome to the New Clip Kings Website</title>
-    <link>https://clipkingsbarber.shop/</link>
-    <description>Experience luxury grooming with our newly designed digital presence.</description>
+    <title>The Art of the Perfect Skin Fade</title>
+    <link>https://clipkingsbarber.shop/blog-skin-fade.html</link>
+    <description>A true skin fade is more than just clipper work — it's structural architecture for your head. Learn how our master barbers map your fade to your bone structure.</description>
+    <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate>
+  </item>
+  <item>
+    <title>Why Professional Barbers Matter</title>
+    <link>https://clipkingsbarber.shop/blog-professional-barbers.html</link>
+    <description>There's a difference between someone who cuts hair and a professional barber. Discover the training, precision, and hygiene standards that separate the kings from the rest.</description>
+    <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate>
+  </item>
+  <item>
+    <title>Beard Grooming Secrets</title>
+    <link>https://clipkingsbarber.shop/blog-beard-grooming.html</link>
+    <description>You've got the perfect line-up and sculpt from our chair. Here is how to maintain the King's standard at home with the right oils, balms, and brushing techniques.</description>
+    <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate>
+  </item>
+  <item>
+    <title>Top Men's Hairstyles for 2026</title>
+    <link>https://clipkingsbarber.shop/blog-hairstyles-2026.html</link>
+    <description>Stay ahead of the curve. From textured crops to modernized classic tapers, here are the reigning styles defining men's grooming this year.</description>
+    <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate>
+  </item>
+  <item>
+    <title>The Luxury Grooming Experience</title>
+    <link>https://clipkingsbarber.shop/blog-luxury-experience.html</link>
+    <description>Discover the benefits of adding a traditional hot towel straight razor shave to your routine. From opening pores to unparalleled relaxation, it's a mandatory luxury.</description>
+    <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate>
   </item>
 </channel>
 </rss>
