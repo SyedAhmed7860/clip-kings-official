@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /node_modules/
+Disallow: /*.py$
+Disallow: /*.backup$
+Disallow: /refactor.js
+Disallow: /inline_mapping.json
 
 Sitemap: https://clipkingsbarber.shop/sitemap-index.xml
 Host: https://clipkingsbarber.shop
