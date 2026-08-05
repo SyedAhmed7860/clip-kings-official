@@ -3,12 +3,81 @@
   <url>
     <loc>https://clipkingsbarber.shop/</loc>
     <image:image>
-      <image:loc>https://clipkingsbarber.shop/assets/images/gallery-cutting.jpg</image:loc>
+      <image:loc>https://clipkingsbarber.shop/assets/images/hero-bg.webp</image:loc>
+      <image:title>Clip Kings Barber Shop Hero</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/gallery-cutting.webp</image:loc>
       <image:title>Precision Haircut</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://clipkingsbarber.shop/assets/images/gallery-beard.jpg</image:loc>
-      <image:title>Beard Sculpting</image:title>
+      <image:loc>https://clipkingsbarber.shop/assets/images/gallery-shave.webp</image:loc>
+      <image:title>Hot Towel Shave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/gallery-tools.webp</image:loc>
+      <image:title>Professional Barber Tools</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/gallery-interior.webp</image:loc>
+      <image:title>Barbershop Interior</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/about.html</loc>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/team-aj.webp</image:loc>
+      <image:title>AJ - Founder and Master Barber</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/team-moe.webp</image:loc>
+      <image:title>Moe - Co-Founder and Master Barber</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/transformations.html</loc>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/transformation-before.webp</image:loc>
+      <image:title>Transformation Before</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/transformation-after.webp</image:loc>
+      <image:title>Transformation After</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/blog-skin-fade.html</loc>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/blog-skin-fade.webp</image:loc>
+      <image:title>The Art of the Perfect Skin Fade</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/blog-beard-grooming.html</loc>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/blog-beard-grooming.webp</image:loc>
+      <image:title>Beard Grooming Secrets</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/blog-hairstyles-2026.html</loc>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/blog-mens-hairstyles.webp</image:loc>
+      <image:title>Top Men's Hairstyles for 2026</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/blog-luxury-experience.html</loc>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/blog-luxury-shave.webp</image:loc>
+      <image:title>The Luxury Grooming Experience</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/blog-professional-barbers.html</loc>
+    <image:image>
+      <image:loc>https://clipkingsbarber.shop/assets/images/blog-pro-barber.webp</image:loc>
+      <image:title>Why Professional Barbers Matter</image:title>
     </image:image>
   </url>
 </urlset>
