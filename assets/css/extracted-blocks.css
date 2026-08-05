@@ -112,11 +112,11 @@ body { background-color: #050505; color: #fff; display: flex; flex-direction: co
         }
 
         .massive-title {
-            font-size: clamp(3.5rem, 8vw, 8.5rem); 
+            font-size: clamp(2.2rem, 6vw, 8.5rem); 
             line-height: 1; 
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             white-space: nowrap;
-            letter-spacing: -2px;
+            letter-spacing: -1px;
         }
 
         /* Premium Buttons */
