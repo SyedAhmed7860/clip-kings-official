@@ -3,11 +3,31 @@
   <url>
     <loc>https://clipkingsbarber.shop/</loc>
     <video:video>
-      <video:thumbnail_loc>https://clipkingsbarber.shop/assets/images/hero-bg.jpg</video:thumbnail_loc>
-      <video:title>Clip Kings Master Barber Experience</video:title>
-      <video:description>Experience the ultimate luxury grooming session at Clip Kings Barber Shop.</video:description>
+      <video:thumbnail_loc>https://clipkingsbarber.shop/assets/images/hero-bg.webp</video:thumbnail_loc>
+      <video:title>Clip Kings Barber Shop — Premium Grooming Experience</video:title>
+      <video:description>Experience the ultimate luxury grooming session at Clip Kings Barber Shop in Thornhill, Ontario.</video:description>
       <video:content_loc>https://clipkingsbarber.shop/assets/images/hero-bg.mp4</video:content_loc>
-      <video:publication_date>2026-06-04T16:26:14.187Z</video:publication_date>
+      <video:publication_date>2026-06-04T00:00:00+00:00</video:publication_date>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/about.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://clipkingsbarber.shop/assets/images/hero-bg.webp</video:thumbnail_loc>
+      <video:title>About Clip Kings Barber Shop</video:title>
+      <video:description>Meet the master barbers behind Thornhill's premier luxury barbershop.</video:description>
+      <video:content_loc>https://clipkingsbarber.shop/assets/images/about-hero-bg.mp4</video:content_loc>
+      <video:publication_date>2026-06-04T00:00:00+00:00</video:publication_date>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://clipkingsbarber.shop/services.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://clipkingsbarber.shop/assets/images/hero-bg.webp</video:thumbnail_loc>
+      <video:title>Premium Barber Services at Clip Kings</video:title>
+      <video:description>Explore our elite menu of grooming services including precision skin fades, hot towel shaves, and luxury packages.</video:description>
+      <video:content_loc>https://clipkingsbarber.shop/assets/images/service-hero-bg.mp4</video:content_loc>
+      <video:publication_date>2026-06-04T00:00:00+00:00</video:publication_date>
     </video:video>
   </url>
 </urlset>
