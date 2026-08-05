@@ -1,15 +1,31 @@
 # Clip Kings Barber Shop
 
-Clip Kings Barber Shop is Thornhill's highest-rated premium barbershop, located at 370 Steeles Ave W #105, Thornhill, ON L4J 6X1. We specialize in precision fades, beard sculpting, and luxury grooming experiences.
+Clip Kings Barber Shop is Thornhill's highest-rated premium barbershop, located at 370 Steeles Ave W #105, Thornhill, ON L4J 6X1, Canada.
 
 ## Contact Information
 Phone: (905) 707-1969
 Website: https://clipkingsbarber.shop
+Book Online: https://booksy.com/en-ca/24439_clip-kings-barbershop_barbershop_990795_thornhill#ba_s=sh_1
 
 ## Hours of Operation
 Monday - Friday: 9:00 AM - 8:00 PM
 Saturday: 9:00 AM - 6:00 PM
-Sunday: 10:00 AM - 4:00 PM
+Sunday: 10:00 AM - 6:00 PM
+
+## Our Team
+- AJ — Founder / Master Barber
+- Moe — Co-Founder / Master Barber
 
 ## Services
-We offer a complete menu of premium grooming services including precision haircuts, skin fades, hot towel shaves, and beard trims. All appointments can be booked online via our website.
+We offer a complete menu of premium grooming services including regular haircuts ($25), precision skin fades ($30), hot towel shaves ($28), beard grooming ($25), kids haircuts (from $22), combo services ($45-$50), facial treatments ($15-$60), and VIP packages ($65-$150). All appointments can be booked online.
+
+## Pages
+- Home: https://clipkingsbarber.shop/
+- About: https://clipkingsbarber.shop/about.html
+- Services: https://clipkingsbarber.shop/services.html
+- Book: https://clipkingsbarber.shop/book.html
+- Gallery: https://clipkingsbarber.shop/gallery.html
+- Reviews: https://clipkingsbarber.shop/reviews.html
+- Contact: https://clipkingsbarber.shop/contact.html
+- Blog: https://clipkingsbarber.shop/blog.html
+- FAQ: https://clipkingsbarber.shop/faq.html
